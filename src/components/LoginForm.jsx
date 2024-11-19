@@ -114,7 +114,7 @@ const LoginForm = ({ setUser }) => {
             </div>
           </div>
           <div className="forgot-password">
-            <a href="#">Forgot your password?</a>
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
         </div>
         <ReCAPTCHA
