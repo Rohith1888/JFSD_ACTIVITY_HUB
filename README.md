@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -72,4 +72,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 =======
 # JFSD_ACTIVITY_HUB
 # Live Demo : https://activityhubklu.netlify.app/
->>>>>>> 64b7ef7412eb35e5838e502d94ddf5e73e24b885
+    
