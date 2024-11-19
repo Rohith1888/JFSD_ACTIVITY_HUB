@@ -207,7 +207,7 @@ const SignUpForm = () => {
           )}
         </div>
         <ReCAPTCHA
-          sitekey="6LeQ6YIqAAAAAKt2oz-L4GftlTuAQTLU0BD4VUUT"
+          sitekey="6LdgtYMqAAAAAEpgr_JGDFn6l0ShNBVLxdFaLSM3"
           onChange={handleCaptchaChange}
         />
         <button type="submit" className="submit-button">
