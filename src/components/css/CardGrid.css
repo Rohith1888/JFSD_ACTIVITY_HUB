@@ -1,0 +1,7 @@
+.cards-grid {
+    display: grid; /* Use grid layout for the card grid */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Spacing between cards */
+    justify-items: center; /* Center cards horizontally */
+    padding: 20px; /* Padding around the grid */
+}

@@ -1,0 +1,283 @@
+/* General Container */
+.profile-container {
+  width: 1200px; /* Adjust width to match design */
+  margin-top: 150px;
+  margin-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.profile-header {
+  position: relative;
+  height: 250px;
+  background: linear-gradient(135deg, #ff7eb3, #ff758c); /* Adjust background gradient */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-header img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  pointer-events: none; /* Prevent interaction with the background image */
+}
+
+/* Profile Image Section */
+.image-upload-container {
+  position: relative;
+  margin-top: -50px; /* Adjust overlap as needed */
+  z-index: 1; /* Ensure it appears above the header background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 150px;
+}
+
+.profile-image {
+  margin-top: 50px;
+  width: 150px; /* Adjust profile image size */
+  height: 150px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, rotate 0.3s ease;
+  background-color: #fff; /* Optional: Ensure a visible fallback */
+}
+
+.profile-image:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.edit-icon {
+  position: absolute;
+  margin-top: 50px;
+  top: 5px;
+  right: 5px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.edit-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Save Button */
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+/* Cancel Button */
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #e53935;
+}
+
+/* User Details Section */
+.profile-details {
+  text-align: center;
+  margin-top: 10px;
+  opacity: 0;
+  animation: slideIn 1s forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.email {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Information Section */
+.profile-info {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 0.95rem;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 1s;
+}
+
+.info-item {
+  flex: 1 1 45%;
+  padding: 10px 15px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.info-item strong {
+  color: #333;
+}
+
+.Toastify__toast-container {
+  margin-top: 100px;  /* Ensure it's on top of other elements */
+}
+
+
+/* Level Section */
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 60px;
+  opacity: 1; /* Set opacity to 1 */
+  animation: none; /* Ensure it is always visible without delay */
+  position: relative; /* Adjust positioning */
+  top: 20px; /* Space below the profile image */
+}
+.edit-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -70px;
+  margin-bottom: 100px;
+  
+}
+/* Edit Section */
+.edit-section {
+  display: flex;
+  justify-content: center; /* Centers buttons horizontally */
+   /* Add space above */
+}
+
+/* General Button Styling for Edit, Save, Cancel */
+.edit-section button {
+  margin: 10px;
+  padding: 12px 25px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Edit Button */
+.edit-edit-button {
+  background-color: #007bff; /* Blue background */
+  color: white;
+}
+
+.edit-edit-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Save Button */
+.save-edit-button {
+  background-color: #28a745; /* Green background */
+  color: white;
+}
+
+.save-edit-button:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Cancel Button */
+.cancel-edit-button {
+  background-color: #dc3545; /* Red background */
+  color: white;
+}
+
+.cancel-edit-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Optional - If you want to add some padding for the entire section */
+.edit-buttons {
+  display: flex;
+  gap: 15px; /* Space between buttons */
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-header{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.input-edit-center{
+  text-align: center;
+}

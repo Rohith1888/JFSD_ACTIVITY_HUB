@@ -1,0 +1,209 @@
+/* Global box-sizing and overflow fix */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; 
+    font-family: "Poppins", sans-serif;
+}
+
+/* Header styles */
+.header {
+    background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);
+    height: 100px;
+    padding: 0 1.5rem;
+    transition: 0.3s ease all;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    z-index: 1000;
+}
+
+.header__content {
+    color: #000000;
+    max-width: 1920px; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    position: relative;
+    z-index: 100; 
+}
+
+.header__content__logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Navigation styles */
+.header__content__nav {
+    display: flex;
+    flex-direction: row;
+    background: transparent; 
+    width: auto;
+    height: 100%;
+    position: static; 
+}
+
+.header__content__nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    margin-bottom: 0; 
+    margin-right: calc(0.5rem + 16px);
+}
+
+.header__content__nav ul li:not(:last-child) {
+    margin-right: 16px; 
+}
+
+/* Button styles */
+.header__content__nav .btn {
+    cursor: pointer;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #1919ad;
+    color: #fffefe;
+    border: 1px solid transparent;
+    transition: 0.3s ease all;
+    margin: 0.5em;
+}
+
+.header__content__nav .btn__login,
+.header__content__nav .btn_register {
+    align-items: center;
+    appearance: none;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s, transform .15s;
+    user-select: none;
+    white-space: nowrap;
+    font-size: 18px;
+}
+
+.header__content__nav .btn__login:focus,
+.header__content__nav .btn_register:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.header__content__nav .btn__login:hover,
+.header__content__nav .btn_register:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.header__content__nav .btn__login:active,
+.header__content__nav .btn_register:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+.header__content__toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    transition: 0.3s ease all;
+}
+
+.header__content__toggle:hover {
+    color: #a2a2f6; 
+}
+
+.header__content__nav li a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.header__content__logo a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.header__content__nav li {
+    font-size: 16px;
+    transition: font-size 0.3s ease-out, transform 0.3s ease-out, border-bottom 0.3s ease-out;
+    border-bottom: 4px solid transparent;
+}
+
+.header__content__nav li:hover {
+    font-size: 18px;
+    transform: scale(1.1);
+    border-bottom: 4px solid blue;
+}
+
+.header__content__logo img {
+    height: 56px;
+    width: 200px;
+}
+
+.header__content__search {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.search__container {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+}
+
+.search__input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search__input:focus {
+    border-color: #a2a2f6;
+    box-shadow: 0px 4px 8px rgba(162, 162, 246, 0.3), 0 0 0 3px rgba(162, 162, 246, 0.2);
+    background-color: #ffffff;
+}
+
+.search__input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+.search__icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.nav_menu li {
+    margin-right: 5px;
+}
+

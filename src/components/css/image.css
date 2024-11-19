@@ -1,0 +1,25 @@
+.image-container {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: cover;
+  }
+  
+  /* Media query for mobile screens */
+  @media (max-width: 480px) {
+    .responsive-image {
+      max-height: 600px; /* Reduce the height for smaller screens */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .responsive-image {
+      max-height: 250px; /* Slightly larger for tablet-sized devices */
+    }
+  }
+  

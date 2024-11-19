@@ -1,0 +1,152 @@
+/* Keyframes for background zooming and sliding animation */
+@keyframes backgroundZoomSlide {
+  0% {
+    background-position: 0% 50%;
+    transform: scale(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1.1); /* Slight zoom at midpoint */
+  }
+  100% {
+    background-position: 0% 50%;
+    transform: scale(1);
+  }
+}
+
+/* Keyframes for text scale and fade-in animation */
+@keyframes scaleFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8); /* Start smaller */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* End at normal size */
+  }
+}
+
+/* Keyframes for bubble animation */
+@keyframes bubble {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+}
+
+.banner {
+  height: 250px;
+  margin-top: 100px;
+  background: linear-gradient(270deg, #4a90e2, #351acf, #69a3e5);
+  background-size: 600% 600%; /* Large size for smooth transition */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  animation: backgroundZoomSlide 8s ease infinite; /* Infinite zoom and slide background */
+  transition: height 0.3s ease;
+  position: relative; /* For positioning the bubbles */
+  overflow: hidden; /* To hide overflow of bubbles */
+}
+
+@media (min-width: 768px) {
+  .banner {
+    height: 250px;
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    font-size: 2rem;
+  }
+}
+
+/* Animated text inside the banner */
+.banner__text {
+  opacity: 0;
+  animation: scaleFadeIn 1s ease forwards; /* Fades in and scales up */
+}
+
+/* Apply animation delay to add staggering effect */
+.banner__text span {
+  display: inline-block;
+  animation: scaleFadeIn 1s ease forwards;
+}
+
+.banner__text span:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.banner__text span:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+/* Spacing between words */
+.banner__text span {
+  margin-right: 10px; /* Adjust the spacing as needed */
+  animation: scaleFadeIn 1s ease forwards;
+}
+
+/* Optional: Remove the margin after the last word */
+.banner__text span:last-child {
+  margin-right: 0;
+}
+
+/* Bubble styles */
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  animation: bubble 10s infinite;
+}
+
+.bubble.small {
+  width: 20px;
+  height: 20px;
+  left: 20%;
+  animation-duration: 12s;
+  animation-delay: 2s;
+}
+
+.bubble.medium {
+  width: 40px;
+  height: 40px;
+  left: 40%;
+  animation-duration: 15s;
+  animation-delay: 4s;
+}
+
+.bubble.large {
+  width: 60px;
+  height: 60px;
+  left: 60%;
+  animation-duration: 18s;
+  animation-delay: 6s;
+}
+
+.bubble.xlarge {
+  width: 80px;
+  height: 80px;
+  left: 80%;
+  animation-duration: 20s;
+  animation-delay: 8s;
+}
+
+.bubble.xxlarge {
+  width: 100px;
+  height: 100px;
+  left: 90%;
+  animation-duration: 22s;
+  animation-delay: 10s;
+}

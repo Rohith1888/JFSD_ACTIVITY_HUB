@@ -1,0 +1,67 @@
+/* Reset margin and padding for body and html */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Ensure the container takes the full height of the viewport */
+.admin-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar-container {
+  width: 300px;
+  background-color: #0a2351;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full height of the viewport */
+  position: fixed; /* Make sidebar fixed */
+  top: 0; /* Start from the top of the viewport */
+  left: 0;
+  overflow-y: auto; 
+  overflow-x: hidden; /* Enable vertical scrolling */
+  transition: transform 0.3s ease; /* Smooth transition for toggling */
+  transform: translateX(0); /* Default position */
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 300px; /* Ensure the main content does not go under the sidebar */
+  padding: 20px;
+  background-color: #f4f4f4;
+  overflow-y: auto; /* Ensure the main content is scrollable if it overflows */
+  top: 0;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 250px; /* Adjust width for mobile screens */
+    transform: translateX(-100%); /* Hide sidebar by default */
+  }
+
+  .sidebar-container.open {
+    transform: translateX(0); /* Show sidebar when open */
+  }
+
+  .main-content {
+    margin-left: 0; /* Remove left margin for main content */
+    padding: 20px;
+  }
+
+  .toggle-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #0a2351;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 1000; /* Ensure the button is above other elements */
+  }
+}

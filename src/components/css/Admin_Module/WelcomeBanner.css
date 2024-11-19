@@ -1,0 +1,48 @@
+.welcome-banner {
+    background-color: #0a2351;
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+    animation: fadeIn 2s ease-in-out, slideIn 1s ease-out;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-banner h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    animation: textFadeIn 2s ease-in-out;
+  }
+  
+  .welcome-banner p {
+    font-size: 1.2rem;
+    margin: 10px 0 0;
+    animation: textFadeIn 2s ease-in-out 0.5s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes textFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

@@ -1,0 +1,93 @@
+/* Keyframes for fade-in and slide-up animation */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Slide up */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Final position */
+  }
+}
+
+/* Class that will be added on scroll */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(20px); /* Initial state (before animation) */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* When element is in view, this class will trigger the animation */
+.animate-on-scroll {
+  opacity: 1;
+  transform: translateY(0); /* Final state */
+  animation: fadeSlideIn 0.6s ease forwards;
+}
+
+/* Other existing styles */
+.cultural-activities {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.cultural-activities h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+  position: relative;
+}
+
+
+
+.container_home {
+  margin: 10px 35px 5px 35px;
+}
+
+/* Cards styling */
+.card {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.register-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #357abd;
+}
+
+@media (min-width: 768px) {
+  .cards-container {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 550px) {
+  .card-image {
+    display: none;
+  }
+}

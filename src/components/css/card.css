@@ -1,0 +1,90 @@
+.card-ev {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Adjust to space elements evenly */
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 300px; /* Fixed width */
+    height: 350px; /* Fixed height */
+    position: relative;
+    overflow: hidden; /* Ensure no content overflows outside the card */
+    margin: 10px;
+}
+
+.card-image-container {
+    width: 150px;
+    height: 150px;
+    margin: 5px 20px;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.card-image-container img {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    border-radius: 4px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Start from the top and space elements */
+    padding: 0 15px;
+    flex-grow: 1; /* Allow it to grow and take up available space */
+    height: calc(100% - 165px);
+    width: 250px; /* Adjust based on the image height and button size */
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    overflow: hidden; /* Prevent overflow */
+    white-space: nowrap; /* No line breaks */
+    text-overflow: ellipsis; /* Ellipsis for overflow */
+}
+
+.card-description {
+    margin: 5px 0;
+    max-height: 80px; /* Limit the description area */
+    overflow: hidden; /* Hide overflow initially */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Allow up to three lines */
+    -webkit-box-orient: vertical;
+    white-space: normal; /* Enable normal text wrapping */
+}
+
+/* Hover state */
+.card-ev:hover {
+    transform: scale(1.05); /* Slight zoom on hover without affecting other cards */
+    z-index: 1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+/* Only make scrollable if content overflows */
+.card-ev:hover .card-description {
+    max-height: 150px; /* Expand the description area when hovered */
+    overflow-y: auto; /* Enable vertical scrolling only if content overflows */
+}
+
+.card-button {
+    background-color: #023e8a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+    width: 100%;
+}
+
+/* Hover effect for button */
+.card-button:hover {
+    background-color: #0096c7;
+}

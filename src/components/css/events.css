@@ -1,0 +1,27 @@
+.center-heading {
+    text-align: center; /* Centers the text horizontally */
+    margin: 20px 0; /* Adds some vertical space around the heading */
+    font-size: 24px; /* Adjusts the font size as needed */
+    font-weight: bold; /* Makes the text bold */
+}
+
+.center-heading {
+    font-size: 30px; /* Adjust the font size for h2 */
+    font-weight: bold; /* Make the font bold */
+    text-align: center; /* Center the text */
+    position: relative; /* Allows for the custom underline */
+    margin-bottom: 20px; /* Add spacing below the heading */
+    color: #333; /* Custom color for the text */
+}
+
+.center-heading::after {
+    content: "";
+    width: 60px; /* Width of the underline */
+    height: 3px; /* Thickness of the underline */
+    background-color: #4a90e2; /* Color of the underline */
+    position: absolute;
+    left: 50%;
+    bottom: -8px; /* Positioning below the text */
+    transform: translateX(-50%); /* Centering the underline */
+    border-radius: 2px; /* Rounded corners for the underline */
+}

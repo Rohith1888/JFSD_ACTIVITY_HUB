@@ -1,0 +1,132 @@
+/* Main Container */
+.overview-container_admin {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9; /* Light background to make the cards pop */
+}
+
+/* Card Layout */
+.card-container_admin {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Ensures cards wrap on smaller screens */
+  margin-bottom: 40px;
+}
+
+/* Card Styling */
+.card_admin {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 30%; /* Adjust width for cards */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative; /* For the floating shadow effect */
+  overflow: hidden; /* Ensures no overflow on hover */
+}
+
+/* Hover Effect for Cards */
+.card_admin:hover {
+  transform: translateY(-8px); /* Lift the card up on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon Styling */
+.card-icon_admin {
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card_admin:hover .card-icon_admin {
+  transform: scale(1.1); /* Slight zoom effect for icons */
+}
+
+/* Card Content */
+.card-content_admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+}
+
+.card_admin h2 {
+  margin: 0 0 10px;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition: color 0.3s ease-in-out;
+}
+
+.card_admin:hover h2 {
+  color: #4a90e2; /* Change text color on hover */
+}
+
+.card p {
+  margin: 5px 0;
+  color: #777;
+  font-size: 14px;
+  transition: color 0.3s ease-in-out;
+}
+
+.card_admin:hover p {
+  color: #555; /* Darker text on hover */
+}
+
+/* Chart Container */
+.chart-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease-out; /* Animation for chart */
+}
+
+.chart-container h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Animation for chart fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card_admin {
+    width: 100%; /* Stack cards on smaller screens */
+  }
+
+  .card-container_admin {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .chart-container {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card_icon_admin {
+    width: 50px;
+    height: 50px;
+  }
+}

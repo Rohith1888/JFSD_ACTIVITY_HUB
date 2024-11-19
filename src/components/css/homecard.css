@@ -1,0 +1,56 @@
+.card {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden; /* Ensure proper containment of image and text */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.card-image {
+  width: 150px; /* Adjust the width as needed */
+  height: auto;
+  margin: 20px;
+  border-radius: 5px;
+  padding: auto; /* Maintain aspect ratio */
+}
+
+.card-info {
+  padding: 15px;
+  flex-grow: 1; /* Makes this div take the remaining space */
+}
+
+.card-title {
+  margin: 0 0 10px; /* Remove default margin */
+}
+
+.card-description {
+  margin: 0 0 15px; /* Remove default margin */
+}
+
+.register-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for button hover effect */
+}
+
+.register-button:hover {
+  background-color: #357abd; /* Darker shade on hover */
+}
+
+/* Hover effect for the card */
+.card:hover {
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+/* Media query to hide images on small screens */
+@media (max-width: 550px) {
+  .card-image {
+      display: none; /* Hide the card image */
+  }
+}

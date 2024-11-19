@@ -1,0 +1,151 @@
+/* Sidebar styles */
+.sidebar {
+  width: 300px;
+  background-color: #0a2351;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+/* Custom scrollbar styles for WebKit browsers */
+.sidebar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #0a2351;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #5072A7;
+  border-radius: 6px;
+  border: 3px solid #0a2351;
+}
+
+/* Custom scrollbar styles for Firefox */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #5072A7 #0a2351;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo_sidebar {
+  max-width: 200px;
+  height: auto;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.sidebar ul li a:hover {
+  background-color: #5072A7;
+  transform: scale(1.05);
+}
+
+.sidebar ul li a.active {
+  background-color: #394a73;
+  font-weight: bold;
+}
+
+.logout {
+  margin-top: auto;
+}
+
+.logout a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.logout a:hover {
+  background-color: #ff4d4d;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout a svg {
+  margin-right: 10px;
+}
+
+/* User info styling */
+.user-info {
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 14px;
+  background-color: #12316b;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .sidebar {
+      width: 250px;
+      transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+      transform: translateX(0);
+  }
+
+  .sidebar ul {
+      flex-grow: 0;
+  }
+
+  .sidebar ul li {
+      margin-bottom: 15px;
+  }
+
+  .sidebar ul li a {
+      padding: 15px;
+  }
+
+  .toggle-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #0a2351;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 1000;
+  }
+}
