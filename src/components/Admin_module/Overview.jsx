@@ -6,14 +6,14 @@ import eventIcon from '../../Assets/images/event.png';
 import clubIcon from '../../Assets/images/post.png';
 
 const Overview = () => {
-  const [eventData, setEventData] = useState([
+  const [eventData] = useState([
     { date: '2023-10-01', count: 20 },
     { date: '2023-10-15', count: 35 },
     { date: '2023-11-01', count: 50 },
     { date: '2023-11-15', count: 30 },
   ]);
 
-  const [dashboardData, setDashboardData] = useState({
+  const [dashboardData] = useState({
     totalStudents: 500,
     studentsRegisteredInEvents: 200,
     totalEvents: 30,

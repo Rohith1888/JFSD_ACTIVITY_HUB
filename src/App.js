@@ -16,7 +16,6 @@ import AllStudents from './components/Admin_module/AllStudents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import WelcomeBanner from './components/Admin_module/WelcomBanner';
-import ScrollTop from './components/ScrollTop';
 import SignUpForm from './components/SignUpForm';
 import PrivateRoute from './components/PrivateRoute';
 import AllClubs from './components/Admin_module/AllClubs';
