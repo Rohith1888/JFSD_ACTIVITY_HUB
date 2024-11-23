@@ -151,11 +151,11 @@
     font-size: 0.9rem;
   }
   
-  .password-match.match {
+  .password-match .match {
     color: green;
   }
   
-  .password-match.no-match {
+  .password-match .no-match {
     color: red;
   }
   .password-input-container {
@@ -176,3 +176,108 @@
     color: #888;
   }
   
+  /* Base styles for a decorative label */
+  .verify-label {
+    width: 50px; /* Adjust based on your design */
+    height: 30px; /* Adjust based on your design */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+    border: none;
+    border-radius: 5px; /* Adjust as needed */
+    cursor: pointer;
+    background-color: #007bff; /* Default color */
+    color: white; /* Text color */
+    transition: background-color 0.3s ease;
+  }
+  
+  .verify-label.sent {
+    background-color: #6c757d; /* Disabled button background */
+    cursor: not-allowed;
+  }
+  
+  .verify-label.verified {
+    background-color: #28a745; /* Success background */
+  }
+  
+  .verify-label:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .verify-label > .MuiCircularProgress-root {
+    /* Center spinner and ensure it doesn't affect size */
+    size: 10px;
+    height: 10px;
+    width: 10px;
+  }
+  
+
+/* Sent state */
+
+
+/* Verified state */
+.verify-label.verified {
+  background-color: #28a745;
+  color: white;
+  cursor: default;
+}
+
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.otp-box {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.otp-box:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 3px #4caf50;
+}
+
+.verify-button,
+.resend-otp {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.verify-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.verify-button:hover {
+  background-color: #45a049;
+}
+
+.resend-otp {
+  background-color: #f44336;
+  color: white;
+}
+
+.resend-otp:hover {
+  background-color: #e53935;
+}
+

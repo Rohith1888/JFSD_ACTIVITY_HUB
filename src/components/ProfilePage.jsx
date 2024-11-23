@@ -63,7 +63,7 @@ const ProfilePage = ({ user, setUser }) => {
   const handleSaveImage = async () => {
     if (newImage) {
       try {
-        const response = await axios.put("http://localhost:8080/updateProfile", {
+        const response = await axios.put("http://localhost:8080/student/updateProfile", {
           email: userData.email,
           profileImage: newImage,
           phoneNumber: newPhoneNumber,
@@ -130,7 +130,7 @@ const ProfilePage = ({ user, setUser }) => {
   const handleSaveDetails = async () => {
     if (newPhoneNumber||newFullName||newIdNumber||newDegree||newBatch) {
       try {
-        const response = await axios.put("http://localhost:8080/updateProfile", {
+        const response = await axios.put("http://localhost:8080/student/updateProfile", {
           email: userData.email,
           phoneNumber: newPhoneNumber,
           fullName: newFullName,
@@ -178,6 +178,7 @@ const ProfilePage = ({ user, setUser }) => {
       }
     }
   };
+  
 
   const handleCancelEdit = () => {
     setNewPhoneNumber(userData.phoneNumber);

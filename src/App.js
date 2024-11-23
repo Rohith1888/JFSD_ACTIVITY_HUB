@@ -21,6 +21,7 @@ import PrivateRoute from './components/PrivateRoute';
 import AllClubs from './components/Admin_module/AllClubs';
 import ProfilePage from './components/ProfilePage';
 
+
 function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ function AppContent() {
         </div>
       ) : (
         <>
+      
           <Navbar user={user} isLoggedIn={!!user} handleLogout={handleLogout} />
           <Routes>
             <Route path="/" element={<Home />} />

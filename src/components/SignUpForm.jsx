@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import '../components/css/SignupForm.css';
 import logo from '../Assets/images/logo_new.png';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { CircularProgress } from '@mui/material';
+
 
 const SignUpForm = () => {
   const [fullName, setFullName] = useState('');
@@ -18,22 +20,103 @@ const SignUpForm = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [isOtpSending, setIsOtpSending] = useState(false);
+  const [timer, setTimer] = useState(30); // Timer starts at 30 seconds
+  const [showOtpField, setShowOtpField] = useState(true); 
 
   const navigate = useNavigate();
 
+  // Handle sending OTP to email
+  const handleSendOtp = async () => {
+    setIsOtpSending(true); // Show spinner
+    try {
+      const response = await axios.post('http://localhost:8080/student/sendOtp', email, {
+        headers: { 'Content-Type': 'text/plain' },
+      });
+
+      if (response.data === 'OTP Sent successfully') {
+        toast.success('OTP sent to your email.');
+        setOtpSent(true); // Change button text
+      } else if (response.data === 'Email already exists') {
+        toast.error('Email already exists. Please use a different email.');
+      } else {
+        toast.error('Error sending OTP.');
+      }
+    } catch (error) {
+      toast.error('Failed to send OTP. Please try again.');
+    } finally {
+      setIsOtpSending(false); // Hide spinner
+    }
+  };
+
+  // Handle resend OTP
+  const handleResendOtp = () => {
+    setOtp(''); // Clear OTP field
+    handleSendOtp(); // Resend OTP
+  };
+  useEffect(() => {
+    let interval;
+    if (otpSent && !otpVerified && showOtpField) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            setShowOtpField(false); // Hide OTP field when timer hits 0
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval); // Cleanup interval on unmount or re-render
+  }, [otpSent, otpVerified, showOtpField]); 
+
+  const handleResendClick = () => {
+    handleResendOtp(); // Trigger the resend OTP logic
+    setTimer(30); // Reset timer to 30 seconds
+    setShowOtpField(true); // Show OTP field again
+  };
+  // Handle OTP verification
+  const handleVerifyOtp = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/student/verifyOtp', {
+        email,
+        otp,
+      });
+      if (response.data === 'OTP verified successfully!') {
+        toast.success('OTP verified successfully!');
+        setOtpVerified(true);
+      } else {
+        toast.error(response.data);
+      }
+    } catch (error) {
+      toast.error('Error verifying OTP. Please try again.');
+    }
+  };
+
+  // Form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!captchaVerified) {
-      toast.error('Please complete the reCAPTCHA verification.');
+
+
+    if (!otpVerified) {
+      toast.error('Please verify your email with the OTP.');
       return;
     }
 
     if (password !== confirmPassword) {
       setPasswordMatch(false);
+      toast.error('Passwords do not match.');
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const response = await axios.post('http://localhost:8080/signup', {
@@ -64,7 +147,6 @@ const SignUpForm = () => {
         }, 1000);
       }
 
-      // Clear fields after submission
       setFullName('');
       setIdNumber('');
       setEmail('');
@@ -74,41 +156,81 @@ const SignUpForm = () => {
     } catch (error) {
       toast.error('An error occurred. Please try again later.');
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  // Password strength check
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
     setPasswordStrength(checkPasswordStrength(value));
   };
 
+  // Password confirmation
   const handleConfirmPasswordChange = (e) => {
     const value = e.target.value;
     setConfirmPassword(value);
     setPasswordMatch(password === value);
   };
 
+  // Password visibility toggle
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
-  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
-
+  // Password strength checker
   const checkPasswordStrength = (password) => {
     if (password.length < 6) return 'Weak';
     if (password.length < 10) return 'Moderate';
     return 'Strong';
   };
 
+  // Get progress bar value based on strength
   const getProgressBarValue = (strength) => {
     switch (strength) {
-      case 'Weak': return 33;
-      case 'Moderate': return 66;
-      case 'Strong': return 100;
-      default: return 0;
+      case 'Weak':
+        return 33;
+      case 'Moderate':
+        return 66;
+      case 'Strong':
+        return 100;
+      default:
+        return 0;
     }
   };
-
-  const handleCaptchaChange = (value) => setCaptchaVerified(!!value);
+  const handleOtpChange = (e, index) => {
+    const value = e.target.value;
+  
+    // Ensure only numeric values are allowed
+    if (/^\d$/.test(value) || value === '') {
+      const otpArray = otp.split('');
+      otpArray[index] = value;
+      setOtp(otpArray.join(''));
+  
+      // Move to the next input box if a digit is entered
+      if (value !== '' && index < 5) {
+        const nextInput = document.querySelector(`.otp-box:nth-child(${index + 2})`);
+        nextInput?.focus();
+      }
+    }
+  };
+  
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace') {
+      const otpArray = otp.split('');
+      otpArray[index] = '';
+      setOtp(otpArray.join(''));
+  
+      // Move to the previous input box if backspace is pressed
+      if (index > 0) {
+        const prevInput = document.querySelector(`.otp-box:nth-child(${index})`);
+        prevInput?.focus();
+      }
+    }
+  };
+  
 
   return (
     <div className="signup-container">
@@ -144,16 +266,89 @@ const SignUpForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            required
-            className="form-input"
-          />
+          <div className="email-verification-container">
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              required
+              className="form-input"
+              disabled={otpSent || otpVerified}
+            />
+           <button
+              type="button"
+              onClick={handleSendOtp}
+              disabled={otpSent || otpVerified || isOtpSending}
+              className={`verify-label ${
+                otpVerified ? 'verified' : otpSent ? 'sent' : ''
+              }`}
+              style={{
+                backgroundColor: otpSent ? 'green' : '',
+                color: otpSent ? '#fff' : '',
+              }}
+            >
+              {isOtpSending ? (
+                <CircularProgress
+                  style={{ height: '20px', width: '20px', color: '#fff', marginRight: '8px' }}
+                  sx={{
+                    '--CircularProgress-trackThickness': '3px',
+                    '--CircularProgress-progressThickness': '2px',
+                    '--CircularProgress-size': '10px',
+                  }}
+                />
+              ) : otpVerified ? (
+                'Verified'
+              ) : otpSent ? (
+                'OTP Sent'
+              ) : (
+                'Verify'
+              )}
+            </button>
+
+          </div>
         </div>
+        {otpSent && !otpVerified && (
+        <div className="form-group otp-container">
+          {showOtpField ? (
+            <>
+              <label htmlFor="otp">Enter OTP</label>
+              <div className="otp-inputs">
+                {Array(6)
+                  .fill('')
+                  .map((_, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength="1"
+                      className="otp-box"
+                      onChange={(e) => handleOtpChange(e, index)}
+                      onKeyDown={(e) => handleKeyDown(e, index)}
+                    />
+                  ))}
+              </div>
+              <button
+                type="button"
+                onClick={handleVerifyOtp}
+                className="verify-button"
+              >
+                Verify OTP
+              </button>
+              <p className="timer">Enter OTP in {timer}s</p>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={handleResendClick}
+              className="verify-button resend-otp"
+            >
+              Resend OTP
+            </button>
+          )}
+        </div>
+      )}
+       
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <div className="password-input-container">
@@ -200,22 +395,18 @@ const SignUpForm = () => {
               {showConfirmPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </div>
           </div>
-          {confirmPassword && (
-            <div className={`password-match ${passwordMatch ? 'match' : 'no-match'}`}>
-              {passwordMatch ? 'Passwords match' : 'Passwords do not match'}
-            </div>
+          {!passwordMatch && (
+            <div className="password-match no-match" style={{color: 'red'}}>Passwords do not match</div>
           )}
         </div>
-        <ReCAPTCHA
-          sitekey="6LdgtYMqAAAAAEpgr_JGDFn6l0ShNBVLxdFaLSM3"
-          onChange={handleCaptchaChange}
-        />
-        <button type="submit" className="submit-button">
-          Register
+        <button type="submit" className="submit-button" >
+          {isSubmitting ? 'Registering...' : 'Register'}
         </button>
       </form>
       <div className="login-link">
-        <p>Already have an account? <Link to="/signin">Log in</Link></p>
+        <p>
+          Already have an account? <Link to="/signin">Log in</Link>
+        </p>
       </div>
     </div>
   );

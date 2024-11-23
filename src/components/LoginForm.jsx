@@ -6,6 +6,7 @@ import '../components/css/LoginForm.css';
 import logo from '../Assets/images/logo_new.png';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { ToastContainer, toast } from 'react-toastify';
+import { ThreeDot } from 'react-loading-indicators';
 
 const LoginForm = ({ setUser }) => {
   const [email, setEmail] = useState('');
@@ -123,7 +124,7 @@ const LoginForm = ({ setUser }) => {
         />
         {error && <div className="error-message">{error}</div>}
         <button type="submit" className="submit-button" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? <ThreeDot color="#f7fcf7" size='small' text="" textColor="" />: 'Login'}
         </button>
       </form>
       <div className="signup-link">

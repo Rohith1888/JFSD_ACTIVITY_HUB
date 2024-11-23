@@ -55,6 +55,9 @@ export default function FullFeaturedCrudGrid() {
   const [fullName, setFullName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [selectedRowId, setSelectedRowId] = React.useState(null);
+  const [editImageDialogOpen, setEditImageDialogOpen] = React.useState(false);
+  const [editImage, setEditImage] = React.useState(null);
+  const [editingRowId, setEditingRowId] = React.useState(null);
 
   const fetchStudents = () => {
     axios.get('http://localhost:8080/admin/all')
@@ -135,6 +138,8 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const handleDeleteClick = (email) => () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this student?');
+    if (confirmDelete) {
     axios.delete(`http://localhost:8080/admin/deleteStudent`, { data: email })
       .then((response) => {
         toast.success('Student deleted successfully!');
@@ -144,7 +149,35 @@ export default function FullFeaturedCrudGrid() {
         console.error('Error deleting student:', error);
         toast.error('There was an error deleting the student.');
       });
+    }
   };
+  const handleImageClick = (id, currentImage) => {
+    setEditingRowId(id);
+    setEditImage(currentImage);
+    setEditImageDialogOpen(true);
+  };
+  const handleSaveImage = () => {
+    if (!editImage) {
+      toast.error('No image selected.');
+      return;
+    }
+
+    const updatedRow = rows.find((row) => row.id === editingRowId);
+    axios.put('http://localhost:8080/admin/updateStudent', {
+      ...updatedRow,
+      profileImage: editImage,
+    })
+      .then(() => {
+        toast.success('Profile image updated successfully!');
+        setEditImageDialogOpen(false);
+        fetchStudents();
+      })
+      .catch((error) => {
+        console.error('Error updating profile image:', error);
+        toast.error('Error updating the profile image.');
+      });
+  };
+  
 
   const processRowUpdate = async (updatedRow) => {
     try {
@@ -169,6 +202,19 @@ export default function FullFeaturedCrudGrid() {
     { field: 'batch', headerName: 'Batch', width: 150, editable: true },
     { field: 'degree', headerName: 'Degree', width: 150, editable: true },
     { field: 'phoneNumber', headerName: 'Phone Number', width: 150, editable: true },
+    {
+      field: 'profileImage',
+      headerName: 'Profile Image',
+      width: 150,
+      renderCell: (params) => (
+        <img
+          src={params.value ? `data:image/jpeg;base64,${params.value}` : 'default-image.jpg'}
+          alt="Profile"
+          style={{ width: '50px', height: '50px', cursor: 'pointer' }}
+          onClick={() => handleImageClick(params.id, params.value)}
+        />
+      ),
+    },
 
     
     {
@@ -321,6 +367,41 @@ export default function FullFeaturedCrudGrid() {
           </Button>
         </DialogActions>
       </Dialog>
+       {/* Edit Image Dialog */}
+       <Dialog open={editImageDialogOpen} onClose={() => setEditImageDialogOpen(false)}>
+          <DialogTitle>Edit Profile Image</DialogTitle>
+          <DialogContent>
+            <img
+              src={editImage ? `data:image/jpeg;base64,${editImage}` : 'default-image.jpg'}
+              alt="Current Profile"
+              style={{ width: '100%', height: 'auto', marginBottom: '20px' }}
+            />
+            <Button variant="contained" component="label">
+              Upload Image
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    setEditImage(reader.result.split(',')[1]);
+                  };
+                  reader.readAsDataURL(file);
+                }}
+              />
+            </Button>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setEditImageDialogOpen(false)} color="secondary" startIcon={<CancelIcon />}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveImage} color="primary" startIcon={<SaveIcon />}>
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
     </Box>
     </>
   );

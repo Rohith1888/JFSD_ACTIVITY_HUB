@@ -96,7 +96,7 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
             <li>
               <Link to="/contact" onClick={closeMenuHandler}>Contact</Link>
             </li>
-            <div style={{ marginRight: '70px' }}></div>
+            <div style={{ marginRight: '20px' }}></div>
             {!isLoggedIn ? (
               <Link to="signin/">
                 <button className="btn btn__login" onClick={closeMenuHandler}>Login/Register</button>
