@@ -20,6 +20,7 @@ import SignUpForm from './components/SignUpForm';
 import PrivateRoute from './components/PrivateRoute';
 import AllClubs from './components/Admin_module/AllClubs';
 import ProfilePage from './components/ProfilePage';
+import ForgotPassword from './components/ForgotPassword';
 
 
 function AppContent() {
@@ -85,6 +86,7 @@ function AppContent() {
         <>
       
           <Navbar user={user} isLoggedIn={!!user} handleLogout={handleLogout} />
+          
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<PrivateRoute element={Events} isLoggedIn={!!user} />} />
@@ -94,6 +96,7 @@ function AppContent() {
             <Route path="/signin" element={<LoginForm setUser={setUser} />} />
             <Route path="/signup" element={<SignUpForm />} />
             <Route path="/profile" element={<ProfilePage user={user} setUser={setUser}/>} />
+            <Route path='/forgot-password' element={<ForgotPassword />} />
           </Routes>
           <Footer />
         </>

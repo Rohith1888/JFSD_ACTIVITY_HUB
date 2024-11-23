@@ -6,7 +6,8 @@ import '../components/css/LoginForm.css';
 import logo from '../Assets/images/logo_new.png';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { ToastContainer, toast } from 'react-toastify';
-import { ThreeDot } from 'react-loading-indicators';
+import BouncingDotsLoader from './BouncingDotsLoader';
+
 
 const LoginForm = ({ setUser }) => {
   const [email, setEmail] = useState('');
@@ -115,7 +116,7 @@ const LoginForm = ({ setUser }) => {
             </div>
           </div>
           <div className="forgot-password">
-            <Link to="#">Forgot your password?</Link>
+            <Link to="/forgot-password">Forgot your password?</Link>
           </div>
         </div>
         <ReCAPTCHA
@@ -124,13 +125,14 @@ const LoginForm = ({ setUser }) => {
         />
         {error && <div className="error-message">{error}</div>}
         <button type="submit" className="submit-button" disabled={loading}>
-          {loading ? <ThreeDot color="#f7fcf7" size='small' text="" textColor="" />: 'Login'}
+          {loading ?  <BouncingDotsLoader />: 'Login'}
         </button>
       </form>
       <div className="signup-link">
         <p>Don't have an account? <Link to="/signup">Register</Link></p>
       </div>
     </div>
+
   );
 };
 

@@ -8,6 +8,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import '../components/css/SignupForm.css';
 import logo from '../Assets/images/logo_new.png';
 import { CircularProgress } from '@mui/material';
+import BouncingDotsLoader from './BouncingDotsLoader';
 
 
 const SignUpForm = () => {
@@ -92,6 +93,8 @@ const SignUpForm = () => {
         toast.success('OTP verified successfully!');
         setOtpVerified(true);
       } else {
+        setOtp(''); // Clear OTP field
+        document.querySelectorAll('.otp-box').forEach((input) => (input.value = ''));
         toast.error(response.data);
       }
     } catch (error) {
@@ -119,7 +122,7 @@ const SignUpForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/signup', {
+      const response = await axios.post('http://localhost:8080/student/signup', {
         email,
         fullName,
         idNumber,
@@ -239,7 +242,7 @@ const SignUpForm = () => {
         <img src={logo} alt="Logo" className="logo" />
       </div>
       <h2 className="signup-heading">Register for Activity Hub</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{width: '500px'}}>
         <div className="form-group">
           <label htmlFor="fullName">Full Name</label>
           <input
@@ -250,6 +253,7 @@ const SignUpForm = () => {
             placeholder="Enter your full name"
             required
             className="form-input"
+            
           />
         </div>
         <div className="form-group">
@@ -399,8 +403,8 @@ const SignUpForm = () => {
             <div className="password-match no-match" style={{color: 'red'}}>Passwords do not match</div>
           )}
         </div>
-        <button type="submit" className="submit-button" >
-          {isSubmitting ? 'Registering...' : 'Register'}
+        <button type="" className="submit-button" >
+          {isSubmitting ? <BouncingDotsLoader /> : 'Register'}
         </button>
       </form>
       <div className="login-link">
