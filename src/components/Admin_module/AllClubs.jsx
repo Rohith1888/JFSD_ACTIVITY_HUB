@@ -56,7 +56,7 @@ export default function FullFeaturedCrudGrid() {
   // Fetch clubs from server
   const fetchClubs = () => {
     axios
-      .get('http://localhost:8080/admin/getAllClubs')
+      .get('http://localhost:2001/admin/getAllClubs')
       .then((response) => {
         setRows(response.data);
       })
@@ -82,7 +82,7 @@ export default function FullFeaturedCrudGrid() {
     }
   
     axios
-      .post('http://localhost:8080/admin/addClub', {
+      .post('http://localhost:2001/admin/addClub', {
         name: newClubName,
         description: newDescription,
         category: newCategory,
@@ -116,7 +116,7 @@ export default function FullFeaturedCrudGrid() {
   // Delete a club
   const handleDeleteClick = (id) => () => {
     axios
-      .delete(`http://localhost:8080/admin/deleteClub`, { data: { id } })
+      .delete(`http://localhost:2001/admin/deleteClub`, { data: { id } })
       .then((response) => {
         if (response.data === 'Club not found') {
           toast.error('Club not found');
@@ -134,7 +134,7 @@ export default function FullFeaturedCrudGrid() {
   // Update club details
   const processRowUpdate = async (updatedRow) => {
     try {
-      await axios.put(`http://localhost:8080/admin/updateClub`, updatedRow);
+      await axios.put(`http://localhost:2001/admin/updateClub`, updatedRow);
       toast.success('Club updated successfully!');
       fetchClubs();
       return updatedRow;
@@ -170,7 +170,7 @@ export default function FullFeaturedCrudGrid() {
     updatedRow.clubImage = editImage;
 
     axios
-      .put(`http://localhost:8080/admin/updateClub`, updatedRow)
+      .put(`http://localhost:2001/admin/updateClub`, updatedRow)
       .then(() => {
         toast.success('Club image updated successfully!');
         fetchClubs();

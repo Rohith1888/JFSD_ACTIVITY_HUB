@@ -1,0 +1,114 @@
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal content container */
+  .modal-content {
+    position: relative;
+    background: #ffffff; /* White theme */
+    color: #333333; /* Text color for white theme */
+    border-radius: 10px;
+    width: 90%;
+    max-width: 1000px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: modal-appear 0.3s ease-out; /* Animation */
+  }
+  
+  /* Close button */
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px; /* Size of the "X" */
+    font-weight: bold;
+    color: #333333; /* Dark gray */
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1050;
+  }
+  
+  .modal-close:hover {
+    color: #ff0000; /* Red color on hover */
+  }
+  
+  /* Modal container (left and right sections) */
+  .modal-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 30px;
+  }
+  
+  /* Left side */
+  .modal-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modal-image-glow {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .join-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #0043ed;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .join-button:hover {
+    background-color: #0900b0;
+  }
+  
+  /* Right side */
+  .modal-right {
+    flex: 2;
+  }
+  
+  .modal-description {
+    margin-top: 10px;
+    line-height: 1.5;
+    color: #555555;
+  }
+  
+  /* Modal animation */
+  @keyframes modal-appear {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .modal-heading{
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+  }

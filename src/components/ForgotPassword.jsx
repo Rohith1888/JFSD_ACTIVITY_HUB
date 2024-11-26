@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     setIsOtpSending(true);
     try {
       const response = await axios.post(
-        'http://localhost:8080/student/sendOtpforgot',
+        'http://localhost:2001/student/sendOtpforgot',
         email,
         {
           headers: { 'Content-Type': 'text/plain' },
@@ -77,7 +77,7 @@ const ForgotPassword = () => {
 
   const handleVerifyOtp = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/student/verifyOtp', {
+      const response = await axios.post('http://localhost:2001/student/verifyOtp', {
         email,
         otp: otp.join(''), // Combine OTP array into string
       });
@@ -127,7 +127,7 @@ const ForgotPassword = () => {
   
     try {
       // Sending a POST request to the server to reset the password
-      const response = await axios.post('http://localhost:8080/student/change', {
+      const response = await axios.post('http://localhost:2001/student/change', {
         email: email,
         password: newPassword, // Assuming 'newPassword' contains the updated password
 // You can include other data if required (e.g., userId, email, etc.)
