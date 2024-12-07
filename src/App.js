@@ -22,6 +22,9 @@ import AllClubs from './components/Admin_module/AllClubs';
 import ProfilePage from './components/ProfilePage';
 import ForgotPassword from './components/ForgotPassword';
 import AllEvents from './components/Admin_module/AllEvents'
+import Organizer from './components/Organizer';
+import MyEventsPage from './components/MyEvents';
+
 
 
 function AppContent() {
@@ -97,6 +100,10 @@ function AppContent() {
             <Route path="/signin" element={<LoginForm setUser={setUser} />} />
             <Route path="/signup" element={<SignUpForm />} />
             <Route path="/profile" element={<ProfilePage user={user} setUser={setUser}/>} />
+            <Route path="/organizer" element={<Organizer user={user} />} />
+          <Route path="/leaderboard" element={<MyEventsPage />} />
+          <Route path="/my-events" element={<MyEventsPage user={user} />} />
+            
             <Route path='/forgot-password' element={<ForgotPassword />} />
           </Routes>
           <Footer />

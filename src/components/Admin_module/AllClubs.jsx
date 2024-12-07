@@ -58,12 +58,41 @@ export default function FullFeaturedCrudGrid() {
     axios
       .get('http://localhost:8080/admin/getAllClubs')
       .then((response) => {
-        setRows(response.data);
+        const clubs = response.data;
+  
+        // For each club, fetch the number of students
+        const clubsWithStudents = clubs.map((club) => {
+          return axios
+            .get(`http://localhost:8080/admin/${club.id}/students`)
+            .then((studentsResponse) => {
+              return {
+                ...club,
+                numberOfStudents: studentsResponse.data.length, // Set the number of students
+              };
+            })
+            .catch((error) => {
+              console.error(`Error fetching students for club ${club.id}:`, error);
+              return {
+                ...club,
+                numberOfStudents: 0, // Default to 0 if there's an error
+              };
+            });
+        });
+  
+        // Wait for all promises to resolve
+        Promise.all(clubsWithStudents)
+          .then((updatedClubs) => {
+            setRows(updatedClubs); // Update the state with clubs including the number of students
+          })
+          .catch((error) => {
+            console.error('Error fetching clubs:', error);
+          });
       })
       .catch((error) => {
         console.error('Error fetching clubs:', error);
       });
   };
+  
 
   React.useEffect(() => {
     fetchClubs();

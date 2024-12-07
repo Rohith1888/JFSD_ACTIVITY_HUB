@@ -53,18 +53,28 @@ const CardsGrid = ({ cardsData, userClubId }) => {
   const handleLeaveClub = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const email = user?.email;
-
+  
     if (!email) {
       toast.error("User email is missing!");
       return;
     }
-
+  
     try {
+      // Check if the user is organizing any events
+      const eventsResponse = await fetch(`http://localhost:8080/student/${email}/organizingEvents`);
+      const organizingEvents = await eventsResponse.json();
+  
+      if (organizingEvents.length > 0) {
+        toast.error("Can't leave as you are the organizer for the club's events. Contact admin.");
+        return; // Prevent leaving the club if the user is organizing events
+      }
+  
+      // Proceed with leaving the club if no events are being organized
       const response = await fetch(
         `http://localhost:8080/student/${email}/leave`,
         { method: "POST" }
       );
-
+  
       const message = await response.text(); // API returns plain text messages
       if (message === "Student successfully left the club.") {
         toast.success("Successfully left the club!");
@@ -77,7 +87,7 @@ const CardsGrid = ({ cardsData, userClubId }) => {
       console.error("Error leaving club:", error);
       toast.error("An error occurred. Please try again.");
     }
-  };
+  };  
 
   return (
     <>

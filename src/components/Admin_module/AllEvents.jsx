@@ -50,6 +50,8 @@ export default function AllEvents() {
     venue: '',
     clubId: '',
     organizerEmail: '',
+    points: '',
+    penalty:'',
   });
   const [editingRowId, setEditingRowId] = React.useState(null);
   const [editImageDialogOpen, setEditImageDialogOpen] = React.useState(false);
@@ -207,6 +209,8 @@ export default function AllEvents() {
     { field: 'eventDate', headerName: 'Date', width: 150, editable: true },
     { field: 'eventTime', headerName: 'Time', width: 150, editable: true },
     { field: 'eventVenue', headerName: 'Venue', width: 200, editable: true },
+    { field: 'points', headerName: 'Points Gain', width: 200, editable: true },
+    { field: 'penalty', headerName: 'Penalty Points', width: 200, editable: true },
     { field: 'clubId', headerName: 'Club ID', width: 150, editable: true },
     { field: 'organizerEmail', headerName: 'Organizer Email', width: 200, editable: true },
     {
@@ -259,7 +263,7 @@ export default function AllEvents() {
           slots={{ toolbar: EditToolbar }}
           slotProps={{ toolbar: { setAddDialogOpen, handleRefresh } }}
         />
-       <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)}>
+      <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)}>
   <DialogTitle>Add Event</DialogTitle>
   <DialogContent>
     {/* Event Name */}
@@ -355,6 +359,28 @@ export default function AllEvents() {
       value={newEvent.venue}
       onChange={(e) => setNewEvent({ ...newEvent, venue: e.target.value })}
       style={{ marginBottom: '15px' }}
+    />
+
+    {/* Points */}
+    <TextField
+      label="Points"
+      fullWidth
+      required
+      value={newEvent.points}
+      onChange={(e) => setNewEvent({ ...newEvent, points: e.target.value })}
+      style={{ marginBottom: '15px' }}
+      type="number"
+    />
+
+    {/* Penalty */}
+    <TextField
+      label="Penalty"
+      fullWidth
+      required
+      value={newEvent.penalty}
+      onChange={(e) => setNewEvent({ ...newEvent, penalty: e.target.value })}
+      style={{ marginBottom: '15px' }}
+      type="number"
     />
 
     {/* Image Upload */}

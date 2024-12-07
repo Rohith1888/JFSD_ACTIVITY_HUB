@@ -202,7 +202,7 @@ export default function FullFeaturedCrudGrid() {
     { field: 'batch', headerName: 'Batch', width: 150, editable: true },
     { field: 'degree', headerName: 'Degree', width: 150, editable: true },
     { field: 'phoneNumber', headerName: 'Phone Number', width: 150, editable: true },
-    {field:'club',headerName:'Club',width:150,editable:true},
+    {field:'club_id',headerName:'Club',width:150,editable:true},
     {
       field: 'profileImage',
       headerName: 'Profile Image',

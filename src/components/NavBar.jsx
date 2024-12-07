@@ -1,3 +1,5 @@
+// Navbar.js
+
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
@@ -16,12 +18,11 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
   const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
-    // Perform any updates when `user` changes
     if (user?.profileImage) {
       setProfileImage(user.profileImage);
     }
-
   }, [user]);
+
   useEffect(() => {
     const handleResize = () => {
       setSize({
@@ -39,14 +40,6 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
       setMenuOpen(false);
     }
   }, [size.width, menuOpen]);
-
-  useEffect(() => {
-    // Load user data from localStorage
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setProfileImage(storedUser.profileImage || null);
-    }
-  }, []);
 
   const closeMenuHandler = () => {
     setMenuOpen(false);
@@ -67,7 +60,7 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
     handleCloseUserMenu();
   };
 
-  const settings = ['My Events', 'Leaderboard', 'Organizer', 'Logout'];
+  const settings = ['Logout'];
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -148,6 +141,21 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
                   <MenuItem>
                     <Link to="/profile">
                       <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link to="/organizer">
+                      <Typography sx={{ textAlign: "center" }}>Organizer</Typography>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link to="/my-events">
+                      <Typography sx={{ textAlign: "center" }}>My Events</Typography>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link to="/leaderboard">
+                      <Typography sx={{ textAlign: "center" }}>LeaderBoard</Typography>
                     </Link>
                   </MenuItem>
                   {settings.map((setting) => (

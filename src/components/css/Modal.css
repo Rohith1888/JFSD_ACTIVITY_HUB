@@ -112,3 +112,131 @@
     font-weight: bold;
     color: #333333;
   }
+
+  /* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.modal {
+  position: relative;
+  background: #ffffff;
+  border-radius: 15px;
+  width: 95%;
+  max-width: 1100px; /* Increased width */
+  padding: 25px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  animation: modal-fade-in 0.4s ease;
+}
+
+/* Close button */
+.modal__close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  font-weight: bold;
+  color: #444444;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal__close-btn:hover {
+  color: #ff4d4d;
+}
+
+/* Modal content layout */
+.modal__content {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* Left section (image) */
+.modal__left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Right section (details) */
+.modal__right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.modal__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: 15px;
+}
+
+.modal__description {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.modal__detail {
+  font-size: 15px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+/* Register button */
+.modal__register-btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.modal__register-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Modal animation */
+@keyframes modal-fade-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
