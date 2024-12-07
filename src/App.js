@@ -21,6 +21,7 @@ import PrivateRoute from './components/PrivateRoute';
 import AllClubs from './components/Admin_module/AllClubs';
 import ProfilePage from './components/ProfilePage';
 import ForgotPassword from './components/ForgotPassword';
+import AllEvents from './components/Admin_module/AllEvents'
 
 
 function AppContent() {
@@ -78,7 +79,7 @@ function AppContent() {
               <Route path="/admin/overview" element={<Overview />} />
               <Route path="/admin/all" element={<AllStudents />} />
               <Route path="/admin/all-clubs" element={<AllClubs />} />
-              <Route path="/admin/all-events" element={<Overview />} />
+              <Route path="/admin/all-events" element={<AllEvents />} />
             </Routes>
           </div>
         </div>

@@ -3,10 +3,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import "../components/css/navbar.css";
 import logo from '../Assets/images/logo_header.png';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Navbar({ user, isLoggedIn, handleLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -67,12 +68,15 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
   };
 
   const settings = ['My Events', 'Leaderboard', 'Organizer', 'Logout'];
+  const isActive = (path) => location.pathname === path;
 
   return (
     <header className="header">
       <div className="header__content">
         <div className="header__content__logo">
-          <Link to="/"><img src={logo} alt="Logo" /></Link>
+          <Link to="/">
+            <img src={logo} alt="Logo" />
+          </Link>
         </div>
 
         <div className="header__content__search">
@@ -84,55 +88,71 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
 
         <nav className={`header__content__nav ${menuOpen ? "isMenu" : ""}`}>
           <ul className="nav_menu">
-            <li>
-              <Link to="/events" onClick={closeMenuHandler}>Events</Link>
+            <li className={isActive("/") ? "active" : ""}>
+              <Link to="/" onClick={closeMenuHandler}>
+                Home
+              </Link>
             </li>
-            <li>
-              <Link to="/clubs" onClick={closeMenuHandler}>Clubs</Link>
+            <li className={isActive("/events") ? "active" : ""}>
+              <Link to="/events" onClick={closeMenuHandler}>
+                Events
+              </Link>
             </li>
-            <li>
-              <Link to="/sports" onClick={closeMenuHandler}>Sports</Link>
+            <li className={isActive("/clubs") ? "active" : ""}>
+              <Link to="/clubs" onClick={closeMenuHandler}>
+                Clubs
+              </Link>
             </li>
-            <li>
-              <Link to="/contact" onClick={closeMenuHandler}>Contact</Link>
+            <li className={isActive("/sports") ? "active" : ""}>
+              <Link to="/sports" onClick={closeMenuHandler}>
+                Sports
+              </Link>
             </li>
-            <div style={{ marginRight: '20px' }}></div>
+            <li className={isActive("/contact") ? "active" : ""}>
+              <Link to="/contact" onClick={closeMenuHandler}>
+                Contact
+              </Link>
+            </li>
             {!isLoggedIn ? (
-              <Link to="signin/">
-                <button className="btn btn__login" onClick={closeMenuHandler}>Login/Register</button>
+              <Link to="/signin">
+                <button className="btn btn__login" onClick={closeMenuHandler}>
+                  Login/Register
+                </button>
               </Link>
             ) : (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar 
-                      src={profileImage ? `data:image/jpeg;base64,${profileImage}` : ""} 
-                      alt={user?.fullName.charAt(0) || "U"} 
+                    <Avatar
+                      src={profileImage ? `data:image/jpeg;base64,${profileImage}` : ""}
+                      alt={user?.fullName.charAt(0) || "U"}
                     />
                   </IconButton>
                 </Tooltip>
                 <Menu
-                  sx={{ mt: '45px' }}
+                  sx={{ mt: "45px" }}
                   id="menu-appbar"
                   anchorEl={anchorElUser}
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                   keepMounted
                   transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem>
-                    <Link to="/profile"><Typography sx={{ textAlign: 'center' }}>Profile</Typography></Link>
+                    <Link to="/profile">
+                      <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+                    </Link>
                   </MenuItem>
                   {settings.map((setting) => (
                     <MenuItem key={setting} onClick={() => handleMenuItemClick(setting)}>
-                      <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                      <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>

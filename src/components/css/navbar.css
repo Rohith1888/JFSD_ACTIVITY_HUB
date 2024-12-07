@@ -206,4 +206,9 @@ html, body {
 .nav_menu li {
     margin-right: 5px;
 }
-
+.nav_menu li.active a {
+    color: blue; /* Active link color */
+    font-weight: bold;
+     /* Optional underline */
+  }
+  

@@ -1,5 +1,6 @@
 import React from "react";
 import "../components/css/Modal.css";
+import { ToastContainer } from "react-toastify";
 
 const Modal = ({ isOpen, onClose, card, onJoin, onLeave, isUserMember }) => {
   if (!isOpen) return null;
@@ -13,6 +14,8 @@ const Modal = ({ isOpen, onClose, card, onJoin, onLeave, isUserMember }) => {
   };
 
   return (
+    <>
+    <ToastContainer/>
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
@@ -42,6 +45,7 @@ const Modal = ({ isOpen, onClose, card, onJoin, onLeave, isUserMember }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

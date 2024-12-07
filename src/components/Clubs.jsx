@@ -30,7 +30,7 @@ export default function Clubs() {
 
             if (storedUser && storedUser.email) {
                 try {
-                    const response = await fetch(`http://localhost:8081/student/getClubId/${storedUser.email}`);
+                    const response = await fetch(`http://localhost:8080/student/getClubId/${storedUser.email}`);
                     
                     if (!response.ok) {
                         throw new Error(`Failed to fetch user club ID: ${response.statusText}`);

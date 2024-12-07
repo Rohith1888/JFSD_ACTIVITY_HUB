@@ -184,18 +184,20 @@
   
   /* Base styles for a decorative label */
   .verify-label {
-    width: 50px; /* Adjust based on your design */
-    height: 30px; /* Adjust based on your design */
+    width: 100px; /* Adjust based on your design */
+    height: 41px; /* Adjust based on your design */
     display: flex;
+    margin-top: 5px;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 10px;
+    font-size: 16px;
     border: none;
     border-radius: 5px; /* Adjust as needed */
     cursor: pointer;
     background-color: #007bff; /* Default color */
-    color: white; /* Text color */
+    color: white;
+     /* Text color */
     transition: background-color 0.3s ease;
   }
   
@@ -270,7 +272,7 @@
 }
 
 .verify-button {
-  background-color: #4caf50;
+  background-color: #0c5fa9;
   color: white;
 }
 
