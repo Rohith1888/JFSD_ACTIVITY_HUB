@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './index.css';
 import './components/css/Admin_Module/AdminHome.css';
@@ -33,15 +33,22 @@ function AppContent() {
   const [loading, setLoading] = useState(true);
   const inactivityTimeoutRef = useRef(null);
 
+  // Handle user logout
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/signin');
+  }, [navigate]);
+
   // Reset inactivity timeout
-  const resetTimeout = () => {
+  const resetTimeout = useCallback(() => {
     clearTimeout(inactivityTimeoutRef.current);
     if (user) {
       inactivityTimeoutRef.current = setTimeout(() => {
         handleLogout();
       }, 15 * 60 * 1000); // 15 minutes
     }
-  };
+  }, [user, handleLogout]);
 
   // Clear timeout on unmount
   useEffect(() => {
@@ -65,7 +72,7 @@ function AppContent() {
     return () => {
       events.forEach(event => window.removeEventListener(event, resetTimeout));
     };
-  }, [user]);
+  }, [resetTimeout]);
 
   // Handle navigation based on user role and path
   useEffect(() => {
@@ -79,12 +86,6 @@ function AppContent() {
   }, [location.pathname, user, navigate]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    navigate('/signin');
-  };
 
   if (loading) {
     return <div>Loading...</div>; // Loading state
