@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import '../components/css/LoginForm.css';
 import logo from '../Assets/images/logo_new.png';
-import ReCAPTCHA from 'react-google-recaptcha';
+
 import { ToastContainer, toast } from 'react-toastify';
 import BouncingDotsLoader from './BouncingDotsLoader';
 
@@ -15,7 +15,7 @@ const LoginForm = ({ setUser }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,11 +30,7 @@ const LoginForm = ({ setUser }) => {
     setError('');
     setLoading(true);
 
-    if (!captchaVerified) {
-      setError('Please complete the reCAPTCHA verification.');
-      setLoading(false);
-      return;
-    }
+   
 
     try {
       const response = await axios.post('https://jfsdactivityhubbackend-production.up.railway.app/admin/login', { email, password });
@@ -66,14 +62,7 @@ const LoginForm = ({ setUser }) => {
     }
   };
 
-  const handleCaptchaChange = (value) => {
-    if (value) {
-      setCaptchaVerified(true);
-      setError('');
-    } else {
-      setCaptchaVerified(false);
-    }
-  };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -119,10 +108,7 @@ const LoginForm = ({ setUser }) => {
             <Link to="/forgot-password">Forgot your password?</Link>
           </div>
         </div>
-        <ReCAPTCHA
-          sitekey="6LdgtYMqAAAAAEpgr_JGDFn6l0ShNBVLxdFaLSM3"
-          onChange={handleCaptchaChange}
-        />
+       
         {error && <div className="error-message">{error}</div>}
         <button type="submit" className="submit-button" disabled={loading}>
           {loading ?  <BouncingDotsLoader />: 'Login'}
