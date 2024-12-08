@@ -60,7 +60,7 @@ export default function AllEvents() {
   // Fetch all events
   const fetchEvents = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8080/admin/getAllEvents');
+      const { data } = await axios.get('https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllEvents');
       setRows(data);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -71,7 +71,7 @@ export default function AllEvents() {
   // Fetch all clubs
   const fetchClubs = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8080/admin/getAllClubs');
+      const { data } = await axios.get('https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllClubs');
       setClubs(data);
     } catch (error) {
       console.error('Error fetching clubs:', error);
@@ -91,7 +91,7 @@ export default function AllEvents() {
       return;
     }
     try {
-      const { data } = await axios.get(`http://localhost:8080/admin/${clubId}/students`);
+      const { data } = await axios.get(`https://jfsdactivityhubbackend-production.up.railway.app/admin/${clubId}/students`);
       setStudents(data);
     } catch (error) {
       console.error('Error fetching students:', error);
@@ -123,7 +123,7 @@ export default function AllEvents() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/admin/addEvent', {
+      const response = await axios.post('https://jfsdactivityhubbackend-production.up.railway.app/admin/addEvent', {
         eventName: name,
         eventDescription: description,
         eventDate: date,
@@ -159,7 +159,7 @@ export default function AllEvents() {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      await axios.delete(`http://localhost:8080/admin/deleteEvent/${id}`);
+      await axios.delete(`https://jfsdactivityhubbackend-production.up.railway.app/admin/deleteEvent/${id}`);
       toast.success('Event deleted successfully!');
       fetchEvents();
     } catch (error) {
@@ -179,7 +179,7 @@ export default function AllEvents() {
     updatedRow.eventImage = editImage;
 
     try {
-      await axios.put('http://localhost:8080/admin/updateEvent', updatedRow);
+      await axios.put('https://jfsdactivityhubbackend-production.up.railway.app/admin/updateEvent', updatedRow);
       toast.success('Event image updated successfully!');
       fetchEvents();
       setEditImageDialogOpen(false);
@@ -191,7 +191,7 @@ export default function AllEvents() {
 
   const processRowUpdate = async (updatedRow) => {
     try {
-      await axios.put('http://localhost:8080/admin/updateEvent', updatedRow);
+      await axios.put('https://jfsdactivityhubbackend-production.up.railway.app/admin/updateEvent', updatedRow);
       toast.success('Event updated successfully!');
       fetchEvents();
       return updatedRow;

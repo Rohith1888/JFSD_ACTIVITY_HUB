@@ -56,14 +56,14 @@ export default function FullFeaturedCrudGrid() {
   // Fetch clubs from server
   const fetchClubs = () => {
     axios
-      .get('http://localhost:8080/admin/getAllClubs')
+      .get('https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllClubs')
       .then((response) => {
         const clubs = response.data;
   
         // For each club, fetch the number of students
         const clubsWithStudents = clubs.map((club) => {
           return axios
-            .get(`http://localhost:8080/admin/${club.id}/students`)
+            .get(`https://jfsdactivityhubbackend-production.up.railway.app/admin/${club.id}/students`)
             .then((studentsResponse) => {
               return {
                 ...club,
@@ -111,7 +111,7 @@ export default function FullFeaturedCrudGrid() {
     }
   
     axios
-      .post('http://localhost:8080/admin/addClub', {
+      .post('https://jfsdactivityhubbackend-production.up.railway.app/admin/addClub', {
         name: newClubName,
         description: newDescription,
         category: newCategory,
@@ -145,7 +145,7 @@ export default function FullFeaturedCrudGrid() {
   // Delete a club
   const handleDeleteClick = (id) => () => {
     axios
-      .delete(`http://localhost:8080/admin/deleteClub`, { data: { id } })
+      .delete(`https://jfsdactivityhubbackend-production.up.railway.app/admin/deleteClub`, { data: { id } })
       .then((response) => {
         if (response.data === 'Club not found') {
           toast.error('Club not found');
@@ -163,7 +163,7 @@ export default function FullFeaturedCrudGrid() {
   // Update club details
   const processRowUpdate = async (updatedRow) => {
     try {
-      await axios.put(`http://localhost:8080/admin/updateClub`, updatedRow);
+      await axios.put(`https://jfsdactivityhubbackend-production.up.railway.app/admin/updateClub`, updatedRow);
       toast.success('Club updated successfully!');
       fetchClubs();
       return updatedRow;
@@ -199,7 +199,7 @@ export default function FullFeaturedCrudGrid() {
     updatedRow.clubImage = editImage;
 
     axios
-      .put(`http://localhost:8080/admin/updateClub`, updatedRow)
+      .put(`https://jfsdactivityhubbackend-production.up.railway.app/admin/updateClub`, updatedRow)
       .then(() => {
         toast.success('Club image updated successfully!');
         fetchClubs();

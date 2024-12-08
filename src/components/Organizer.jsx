@@ -20,7 +20,7 @@ export default function Organizer() {
       }
 
       const email = user.email;
-      const url = `http://localhost:8080/student/${email}/organizingEvents`;
+      const url = `https://jfsdactivityhubbackend-production.up.railway.app/student/${email}/organizingEvents`;
 
       try {
         const response = await fetch(url);
@@ -46,7 +46,7 @@ export default function Organizer() {
 
     // Fetch the list of registered students for the event
     try {
-      const response = await fetch(`http://localhost:8080/registrations/events/${eventId}/students`);
+      const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/events/${eventId}/students`);
       const studentData = await response.json();
 
       console.log("Students registered for this event:", studentData);
@@ -88,7 +88,7 @@ export default function Organizer() {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/student/${currentEvent.id}/markAttendance`, {
+      const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/student/${currentEvent.id}/markAttendance`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

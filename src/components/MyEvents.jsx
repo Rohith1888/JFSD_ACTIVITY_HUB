@@ -12,7 +12,7 @@ const MyEventsPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.email) {
       try {
-        const response = await fetch(`http://localhost:8080/registrations/${user.email}`);
+        const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/${user.email}`);
         if (!response.ok) throw new Error("Failed to fetch user registered events");
         const data = await response.json();
         setUserRegisteredEventIds(data.map((event) => event.eventId));
@@ -26,7 +26,7 @@ const MyEventsPage = () => {
   const cancelRegistration = async (email, eventId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/registrations/${email}/cancel/${eventId}`,
+        `https://jfsdactivityhubbackend-production.up.railway.app/registrations/${email}/cancel/${eventId}`,
         { method: "POST" }
       );
 
@@ -56,7 +56,7 @@ const MyEventsPage = () => {
         const eventDetails = [];
         for (const eventId of userRegisteredEventIds) {
           try {
-            const response = await fetch(`http://localhost:8080/admin/getEvent/${eventId}`);
+            const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/admin/getEvent/${eventId}`);
             if (response.ok) {
               const data = await response.json();
               eventDetails.push(data);

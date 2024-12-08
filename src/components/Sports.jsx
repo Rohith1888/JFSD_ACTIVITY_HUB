@@ -15,13 +15,13 @@ export default function Sports() {
   useEffect(() => {
     const fetchEventsAndClubs = async () => {
       try {
-        const eventsResponse = await fetch("http://localhost:8080/admin/getAllEvents");
+        const eventsResponse = await fetch("https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllEvents");
         const eventsData = await eventsResponse.json();
 
         // Fetch club info for each event and add to the event
         const eventsWithClubs = await Promise.all(
           eventsData.map(async (event) => {
-            const clubResponse = await fetch(`http://localhost:8080/admin/${event.clubId}`);
+            const clubResponse = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/admin/${event.clubId}`);
             const clubData = await clubResponse.json();
             return { ...event, club: clubData };
           })
@@ -40,7 +40,7 @@ export default function Sports() {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user?.email) {
         try {
-          const response = await fetch(`http://localhost:8080/registrations/${user.email}`);
+          const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/${user.email}`);
           if (!response.ok) throw new Error("Failed to fetch user registered events");
           const data = await response.json();
           setUserRegisteredEventIds(data.map((event) => event.eventId));

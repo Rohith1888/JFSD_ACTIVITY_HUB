@@ -10,7 +10,7 @@ export default function Clubs() {
     useEffect(() => {
         const fetchClubs = async () => {
             try {
-                const response = await fetch("http://localhost:8080/admin/getAllClubs");
+                const response = await fetch("https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllClubs");
                 if (!response.ok) {
                     throw new Error(`Failed to fetch clubs: ${response.statusText}`);
                 }
@@ -30,7 +30,7 @@ export default function Clubs() {
 
             if (storedUser && storedUser.email) {
                 try {
-                    const response = await fetch(`http://localhost:8080/student/getClubId/${storedUser.email}`);
+                    const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/student/getClubId/${storedUser.email}`);
                     
                     if (!response.ok) {
                         throw new Error(`Failed to fetch user club ID: ${response.statusText}`);

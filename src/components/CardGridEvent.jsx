@@ -22,7 +22,7 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
         console.log("Fetching club names for clubIds:", clubIds); // Debugging line
         const clubDataPromises = clubIds.map(async (clubId) => {
           try {
-            const response = await fetch(`http://localhost:8080/admin/${clubId}`);
+            const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/admin/${clubId}`);
             if (response.ok) {
               const clubData = await response.json();
               console.log(`Fetched data for clubId ${clubId}:`, clubData); // Debugging line
@@ -73,7 +73,7 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/registrations/${email}/register/${eventId}`,
+        `https://jfsdactivityhubbackend-production.up.railway.app/registrations/${email}/register/${eventId}`,
         { method: "POST" }
       );
 
@@ -102,7 +102,7 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/registrations/${email}/cancel/${eventId}`,
+        `https://jfsdactivityhubbackend-production.up.railway.app/registrations/${email}/cancel/${eventId}`,
         { method: "POST" }
       );
 

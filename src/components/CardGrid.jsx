@@ -32,7 +32,7 @@ const CardsGrid = ({ cardsData, userClubId }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/student/${email}/join/${clubId}`,
+        `https://jfsdactivityhubbackend-production.up.railway.app/student/${email}/join/${clubId}`,
         { method: "POST" }
       );
 
@@ -61,7 +61,7 @@ const CardsGrid = ({ cardsData, userClubId }) => {
   
     try {
       // Check if the user is organizing any events
-      const eventsResponse = await fetch(`http://localhost:8080/student/${email}/organizingEvents`);
+      const eventsResponse = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/student/${email}/organizingEvents`);
       const organizingEvents = await eventsResponse.json();
   
       if (organizingEvents.length > 0) {
@@ -71,7 +71,7 @@ const CardsGrid = ({ cardsData, userClubId }) => {
   
       // Proceed with leaving the club if no events are being organized
       const response = await fetch(
-        `http://localhost:8080/student/${email}/leave`,
+        `https://jfsdactivityhubbackend-production.up.railway.app/student/${email}/leave`,
         { method: "POST" }
       );
   

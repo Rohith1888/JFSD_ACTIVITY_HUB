@@ -36,7 +36,7 @@ const SignUpForm = () => {
   const handleSendOtp = async () => {
     setIsOtpSending(true); // Show spinner
     try {
-      const response = await axios.post('http://localhost:8080/student/sendOtp', email, {
+      const response = await axios.post('https://jfsdactivityhubbackend-production.up.railway.app/student/sendOtp', email, {
         headers: { 'Content-Type': 'text/plain' },
       });
 
@@ -85,7 +85,7 @@ const SignUpForm = () => {
   // Handle OTP verification
   const handleVerifyOtp = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/student/verifyOtp', {
+      const response = await axios.post('https://jfsdactivityhubbackend-production.up.railway.app/student/verifyOtp', {
         email,
         otp,
       });
@@ -122,7 +122,7 @@ const SignUpForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/student/signup', {
+      const response = await axios.post('https://jfsdactivityhubbackend-production.up.railway.app/student/signup', {
         email,
         fullName,
         idNumber,

@@ -60,7 +60,7 @@ export default function FullFeaturedCrudGrid() {
   const [editingRowId, setEditingRowId] = React.useState(null);
 
   const fetchStudents = () => {
-    axios.get('http://localhost:8080/student/all')
+    axios.get('https://jfsdactivityhubbackend-production.up.railway.app/student/all')
       .then(response => {
         const studentsWithIds = response.data.map((student, index) => ({
           id: student.email,
@@ -113,7 +113,7 @@ export default function FullFeaturedCrudGrid() {
       return;
     }
   
-    axios.post('http://localhost:8080/student/addStudent', {
+    axios.post('https://jfsdactivityhubbackend-production.up.railway.app/student/addStudent', {
       email: newEmail,
       fullName: fullName,
       idNumber: newIdNumber,
@@ -140,7 +140,7 @@ export default function FullFeaturedCrudGrid() {
   const handleDeleteClick = (email) => () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this student?');
     if (confirmDelete) {
-    axios.delete(`http://localhost:8080/student/deleteStudent`, { data: email })
+    axios.delete(`https://jfsdactivityhubbackend-production.up.railway.app/student/deleteStudent`, { data: email })
       .then((response) => {
         toast.success('Student deleted successfully!');
         setRows((prevRows) => prevRows.filter((row) => row.email !== email));
@@ -163,7 +163,7 @@ export default function FullFeaturedCrudGrid() {
     }
 
     const updatedRow = rows.find((row) => row.id === editingRowId);
-    axios.put('http://localhost:8080/student/updateStudent', {
+    axios.put('https://jfsdactivityhubbackend-production.up.railway.app/student/updateStudent', {
       ...updatedRow,
       profileImage: editImage,
     })
@@ -181,7 +181,7 @@ export default function FullFeaturedCrudGrid() {
 
   const processRowUpdate = async (updatedRow) => {
     try {
-      await axios.put(`http://localhost:8080/student/updateStudent`, updatedRow);
+      await axios.put(`https://jfsdactivityhubbackend-production.up.railway.app/student/updateStudent`, updatedRow);
       toast.success('Student updated successfully!');
       fetchStudents();
       return updatedRow;
