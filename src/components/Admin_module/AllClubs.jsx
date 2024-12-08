@@ -44,7 +44,7 @@ export default function FullFeaturedCrudGrid() {
   const [addDialogOpen, setAddDialogOpen] = React.useState(false);
   const [newClubName, setNewClubName] = React.useState('');
   const [newDescription, setNewDescription] = React.useState('');
-  const [ setNewNumberOfStudents] = React.useState('');
+ 
   const [newCategory, setNewCategory] = React.useState('');
   const [newImage, setNewImage] = React.useState('');
   const [editImageDialogOpen, setEditImageDialogOpen] = React.useState(false);

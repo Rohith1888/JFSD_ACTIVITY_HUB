@@ -51,15 +51,7 @@ const Sidebar = ({ isOpen, toggleSidebar, handleLogout, user }) => {
             Events
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/admin/all-admins"
-            onClick={toggleSidebar}
-            activeClassName="active"
-          >
-            Admin's
-          </NavLink>
-        </li>
+       
       </ul>
       
       <div className="logout">

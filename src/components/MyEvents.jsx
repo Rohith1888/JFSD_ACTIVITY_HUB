@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify'; // Import toast for notifications
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const MyEventsPage = () => {
@@ -20,26 +20,6 @@ const MyEventsPage = () => {
         console.error("Error fetching user registered events:", error);
       }
     }
-  };
-
-  // Fetch Event Details Using Event ID
-  const fetchEventDetails = async () => {
-    const eventDetails = [];
-    for (const eventId of userRegisteredEventIds) {
-      try {
-        const response = await fetch(`http://localhost:8080/admin/getEvent/${eventId}`);
-        if (response.ok) {
-          const data = await response.json();
-          eventDetails.push(data);
-        } else {
-          console.error(`Failed to fetch details for eventId ${eventId}`);
-        }
-      } catch (error) {
-        console.error("Error fetching event details:", error);
-      }
-    }
-    setEventsDetails(eventDetails);
-    setLoading(false);
   };
 
   // Cancel Registration Function
@@ -64,14 +44,36 @@ const MyEventsPage = () => {
     }
   };
 
-  // Fetch User Registered Events and Event Details on component mount
+  // Fetch User Registered Events on component mount
   useEffect(() => {
     fetchUserRegisteredEvents();
   }, []);
 
+  // Fetch Event Details when `userRegisteredEventIds` changes
   useEffect(() => {
     if (userRegisteredEventIds.length > 0) {
+      const fetchEventDetails = async () => {
+        const eventDetails = [];
+        for (const eventId of userRegisteredEventIds) {
+          try {
+            const response = await fetch(`http://localhost:8080/admin/getEvent/${eventId}`);
+            if (response.ok) {
+              const data = await response.json();
+              eventDetails.push(data);
+            } else {
+              console.error(`Failed to fetch details for eventId ${eventId}`);
+            }
+          } catch (error) {
+            console.error("Error fetching event details:", error);
+          }
+        }
+        setEventsDetails(eventDetails);
+        setLoading(false);
+      };
+
       fetchEventDetails();
+    } else {
+      setLoading(false); // Stop loading if no registered events
     }
   }, [userRegisteredEventIds]);
 
@@ -86,43 +88,56 @@ const MyEventsPage = () => {
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {eventsDetails.length > 0 ? (
           eventsDetails.map((event) => (
-            <div key={event.id} style={{
-              width: '300px',
-              height: '400px',  // Set a fixed height to ensure uniform card size
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              margin: '16px',
-              padding: '16px',
-              backgroundColor: '#fff',
-              display: 'flex',
-              flexDirection: 'column',  // Align content vertically
-              justifyContent: 'space-between',  // Push content to top and bottom
-            }}>
-              <div style={{
-                width: '100%',
-                height: '150px',  // Set a fixed height for the image container
-                overflow: 'hidden',  // Prevent overflow of image
+            <div
+              key={event.id}
+              style={{
+                width: '300px',
+                height: '400px',
+                border: '1px solid #ddd',
                 borderRadius: '8px',
-                marginBottom: '16px',
-              }}>
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                margin: '16px',
+                padding: '16px',
+                backgroundColor: '#fff',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div
+                style={{
+                  width: '100%',
+                  height: '150px',
+                  overflow: 'hidden',
+                  borderRadius: '8px',
+                  marginBottom: '16px',
+                }}
+              >
                 <img
                   src={`data:image/jpeg;base64,${event.eventImage}`}
                   alt={event.eventName}
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',  // Ensure image covers the container without distortion
+                    objectFit: 'cover',
                   }}
                 />
               </div>
-              <div style={{ flexGrow: 1 }}>  {/* Allow content to grow to fill space */}
+              <div style={{ flexGrow: 1 }}>
                 <h3>{event.eventName}</h3>
                 <p>{event.eventDescription}</p>
-                <p><strong>Date:</strong> {event.eventDate}</p>
-                <p><strong>Time:</strong> {event.eventTime}</p>
-                <p><strong>Venue:</strong> {event.eventVenue}</p>
-                <p><strong>Points:</strong> {event.points}</p>
+                <p>
+                  <strong>Date:</strong> {event.eventDate}
+                </p>
+                <p>
+                  <strong>Time:</strong> {event.eventTime}
+                </p>
+                <p>
+                  <strong>Venue:</strong> {event.eventVenue}
+                </p>
+                <p>
+                  <strong>Points:</strong> {event.points}
+                </p>
               </div>
               <button
                 onClick={() => cancelRegistration(JSON.parse(localStorage.getItem("user")).email, event.id)}
@@ -143,7 +158,7 @@ const MyEventsPage = () => {
             </div>
           ))
         ) : (
-          <p style={{marginBottom:'500px'}}>No events registered yet.</p>
+          <p style={{ marginBottom: '500px' }}>No events registered yet.</p>
         )}
       </div>
     </div>

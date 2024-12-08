@@ -153,11 +153,6 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
                       <Typography sx={{ textAlign: "center" }}>My Events</Typography>
                     </Link>
                   </MenuItem>
-                  <MenuItem>
-                    <Link to="/leaderboard">
-                      <Typography sx={{ textAlign: "center" }}>LeaderBoard</Typography>
-                    </Link>
-                  </MenuItem>
                   {settings.map((setting) => (
                     <MenuItem key={setting} onClick={() => handleMenuItemClick(setting)}>
                       <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
