@@ -318,7 +318,7 @@ const handleViewRegisteredStudents = async (eventId) => {
     >
       {clubs.map((club) => (
         <MenuItem key={club.id} value={club.id}>
-          {club.name}
+          {club.name} - ({club.category})
         </MenuItem>
       ))}
     </TextField>
