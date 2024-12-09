@@ -23,6 +23,8 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { FormControlLabel, Checkbox } from '@mui/material';
 function EditToolbar(props) {
   const { setAddDialogOpen, handleRefresh } = props;
 
@@ -52,6 +54,11 @@ export default function FullFeaturedCrudGrid() {
   const [editingRowId, setEditingRowId] = React.useState(null);
   const[newVenue,setNewVenue]=React.useState('');
   const[newClubEmail,setNewClubEmail]=React.useState('');
+  const [studentsList, setStudentsList] = React.useState([]);
+const [studentsDialogOpen, setStudentsDialogOpen] = React.useState(false);
+const [selectedClubIdForAdd, setSelectedClubIdForAdd] = React.useState(null);
+
+
 
   // Fetch clubs from server
   const fetchClubs = () => {
@@ -210,7 +217,173 @@ export default function FullFeaturedCrudGrid() {
         toast.error('Failed to update image.');
       });
   };
+  const handleViewAllStudents = async (clubId) => {
+    try {
+      const response = await axios.get(`https://jfsdactivityhubbackend-production.up.railway.app/admin/${clubId}/students`);
+      setSelectedClubIdForAdd(clubId); // Store the club ID for adding students
+      setStudentsList(response.data); // Store the students data in state
+      setStudentsDialogOpen(true); // Open the students dialog
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    }
+  };
 
+
+  const StudentsDialog = ({ open, onClose, students, clubId, handleViewAllStudents }) => {
+    const [availableStudents, setAvailableStudents] = React.useState([]);
+    const [selectedStudents, setSelectedStudents] = React.useState([]);
+  
+    React.useEffect(() => {
+      if (open) {
+        const fetchAvailableStudents = async () => {
+          try {
+            const response = await axios.get("https://jfsdactivityhubbackend-production.up.railway.app/student/all");
+            const studentsWithNoClub = response.data.filter(student => student.club_id === null);
+            setAvailableStudents(studentsWithNoClub);
+          } catch (error) {
+            console.error("Error fetching students:", error);
+          }
+        };
+        fetchAvailableStudents();
+      }
+    }, [open]);
+  
+    const handleDeleteStudent = async (email) => {
+      try {
+        await axios.post(`https://jfsdactivityhubbackend-production.up.railway.app/student/${email}/leave`);
+        toast.success(`Student ${email} removed from the club!`);
+        
+        // Remove the student from the local students list
+        
+        handleViewAllStudents(selectedClubIdForAdd); // Refresh students list
+      } catch (error) {
+        console.error("Error deleting student: ", error);
+        toast.error("Failed to remove student");
+      }
+    };
+  
+    const handleAddStudents = async () => {
+      try {
+        if (selectedStudents.length > 0) {
+          await Promise.all(selectedStudents.map(async (email) => {
+            await axios.post(`https://jfsdactivityhubbackend-production.up.railway.app/student/${email}/join/${selectedClubIdForAdd}`);
+            
+            
+          }));
+          toast.success("Selected students added to the club!");
+          handleViewAllStudents(clubId); // Refresh students list
+          setSelectedStudents([]); // Clear selected students
+          onClose(); // Close the dialog
+        } else {
+          toast.error("Please select at least one student.");
+        }
+      } catch (error) {
+        console.error("Error adding students:", error);
+        toast.error("Failed to add students");
+        console.log(clubId);
+        
+      }
+    };
+  
+    const handleToggleStudent = (email) => {
+      setSelectedStudents(prevSelected => {
+        if (prevSelected.includes(email)) {
+          return prevSelected.filter(e => e !== email); // Remove from selected if already selected
+        } else {
+          return [...prevSelected, email]; // Add to selected
+        }
+      });
+    };
+  
+    return (
+      <>
+        <ToastContainer />
+        <Dialog open={open} onClose={onClose}>
+          <DialogTitle>Students List</DialogTitle>
+          <DialogContent>
+            {students && students.length > 0 ? (
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Mail</th>
+                    <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Full Name</th>
+                    <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>ID Number</th>
+                    <th style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students.map((student) => (
+                    <tr key={student.id}>
+                      <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{student.email}</td>
+                      <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{student.fullName}</td>
+                      <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{student.idNumber}</td>
+                      <td style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>
+                        <Button
+                          color="secondary"
+                          onClick={() => handleDeleteStudent(student.email)}
+                          startIcon={<DeleteIcon />}
+                        >
+                          Remove
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <Typography>No students joined.</Typography>
+            )}
+  
+            {/* Dropdown for adding new students */}
+            <TextField
+              select
+              label="Select Students to Add"
+              multiple
+              value={selectedStudents}
+              onChange={(e) => setSelectedStudents(e.target.value)}
+              fullWidth
+              style={{ marginTop: '15px' }}
+              SelectProps={{
+                renderValue: (selected) => {
+                  return selected.join(', ');
+                }
+              }}
+            >
+              {availableStudents.map((student) => (
+                <MenuItem key={student.email} value={student.email}>
+                  {student.fullName} - {student.email}
+                </MenuItem>
+              ))}
+            </TextField>
+  
+            <div style={{ marginTop: '20px' }}>
+              <Typography variant="h6">Select Students to Register</Typography>
+              {availableStudents.map((student) => (
+                <FormControlLabel
+                  key={student.email}
+                  control={
+                    <Checkbox
+                      checked={selectedStudents.includes(student.email)}
+                      onChange={() => handleToggleStudent(student.email)}
+                      name={student.fullName}
+                    />
+                  }
+                  label={student.fullName}
+                />
+              ))}
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onClose}>Close</Button>
+            <Button onClick={handleAddStudents} color="primary" disabled={selectedStudents.length === 0}>
+              Add Students
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+  
   // Define columns for the DataGrid
   const columns = [
     { field: 'id', headerName: 'ID', width: 100, editable: false, height: 100 },
@@ -219,6 +392,17 @@ export default function FullFeaturedCrudGrid() {
     {field: 'venue', headerName: 'Venue', width: 180, editable: true },
     {field: 'clubMail', headerName: 'Club Email', width: 180, editable: true },
     { field: 'numberOfStudents', headerName: 'Number of Students', type: 'number', width: 180, editable: true },
+    {
+      field: 'viewAllStudents',
+      headerName: 'View Students',
+      width: 150,
+      renderCell: (params) => (
+        <VisibilityIcon
+          style={{ cursor: 'pointer' }}
+          onClick={() => handleViewAllStudents(params.row.id)} // Trigger function to view students
+        />
+      ),
+    },
     { field: 'category', headerName: 'Category', width: 180, editable: true },
     {
       field: 'clubImage',
@@ -341,6 +525,12 @@ export default function FullFeaturedCrudGrid() {
             <Button onClick={handleAddRecord}>Save</Button>
           </DialogActions>
         </Dialog>
+        <StudentsDialog
+        open={studentsDialogOpen}
+        onClose={() => setStudentsDialogOpen(false)}
+        students={studentsList}
+        handleViewAllStudents={handleViewAllStudents}
+      />
         <Dialog open={editImageDialogOpen} onClose={() => setEditImageDialogOpen(false)}>
           <DialogTitle>Edit Club Image</DialogTitle>
           <DialogContent>

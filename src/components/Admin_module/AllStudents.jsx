@@ -10,6 +10,8 @@ import CancelIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
 
 import {
   GridRowModes,
@@ -25,6 +27,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import '../css/Admin_Module/AllStudents.css';
+
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 function EditToolbar(props) {
   const { setAddDialogOpen, handleRefresh } = props;
@@ -58,6 +62,20 @@ export default function FullFeaturedCrudGrid() {
   const [editImageDialogOpen, setEditImageDialogOpen] = React.useState(false);
   const [editImage, setEditImage] = React.useState(null);
   const [editingRowId, setEditingRowId] = React.useState(null);
+  const [eventDialogOpen, setEventDialogOpen] = React.useState(false);
+  const [registeredEvents, setRegisteredEvents] = React.useState([]);
+  const [currentEmail, setCurrentEmail] = React.useState('');
+  const [allEvents, setAllEvents] = React.useState([]);
+  const [selectedEvents, setSelectedEvents] = React.useState([]);
+  const [addingEvents, setAddingEvents] = React.useState(false); 
+
+  const handleToggleEvent = (eventId) => {
+    setSelectedEvents((prevSelectedEvents) =>
+      prevSelectedEvents.includes(eventId)
+        ? prevSelectedEvents.filter((id) => id !== eventId)
+        : [...prevSelectedEvents, eventId]
+    );
+  };
 
   const fetchStudents = () => {
     axios.get('https://jfsdactivityhubbackend-production.up.railway.app/student/all')
@@ -74,6 +92,7 @@ export default function FullFeaturedCrudGrid() {
       });
   };
 
+  
   React.useEffect(() => {
     fetchStudents();
   }, []);
@@ -85,6 +104,48 @@ export default function FullFeaturedCrudGrid() {
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
+    }
+  };
+  const handleRegisterEvents = async () => {
+    try {
+      await Promise.all(
+        selectedEvents.map((eventId) =>
+          axios.post(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/${currentEmail}/register/${eventId}`)
+        )
+      );
+      setEventDialogOpen(false); // Close the dialog after registration
+      setSelectedEvents([]); // Reset selected events
+    } catch (error) {
+      console.error('Error registering events:', error);
+    }
+  };
+  React.useEffect(() => {
+    const fetchAllEvents = async () => {
+      try {
+        const response = await axios.get('https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllEvents');
+        setAllEvents(response.data.filter(event => event.id)); // Ensure event has valid id
+      } catch (error) {
+        console.error('Error fetching all events:', error);
+      }
+    };
+    
+    fetchAllEvents();
+  }, []);
+  const handleViewRegisteredEvents = async (studentEmail) => {
+    try {
+      const response = await axios.get(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/${studentEmail}`);
+      const events = await Promise.all(
+        response.data.map(async (registration) => {
+          const eventResponse = await axios.get(`https://jfsdactivityhubbackend-production.up.railway.app/admin/getEvent/${registration.eventId}`);
+          return { ...registration, eventName: eventResponse.data.eventName };
+        })
+      );
+      setRegisteredEvents(events);
+      setEventDialogOpen(true);
+      setCurrentEmail(studentEmail);
+    } catch (error) {
+      console.error('Error fetching registered events:', error);
+      toast.error('Unable to fetch registered events.');
     }
   };
 
@@ -191,10 +252,29 @@ export default function FullFeaturedCrudGrid() {
       throw error;
     }
   };
+  const handleCancelRegistration = (eventId, email) => {
+    const confirmCancel = window.confirm('Are you sure you want to cancel this registration?');
+    if (confirmCancel) {
+      axios
+        .post(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/${email}/cancel/${eventId}`)
+        .then((response) => {
+          toast.success('Event registration canceled successfully!');
+          setRegisteredEvents((prevEvents) =>
+            prevEvents.filter((event) => event.id !== eventId)
+          );
+        })
+        .catch((error) => {
+          console.error('Error canceling registration:', error);
+          toast.error('Failed to cancel registration.');
+        });
+    }
+  };
+  
 
   const columns = [
     { field: 'serialNumber', headerName: 'S.No', width: 80 },
     { field: 'idNumber', headerName: 'ID Number', width: 150, editable: true },
+    
     { field: 'email', headerName: 'Email', width: 220, editable: false },
     { field: 'fullName', headerName: 'Full Name', width: 180, editable: true },
     { field: 'password', headerName: 'Password', width: 150, editable: true },
@@ -202,7 +282,18 @@ export default function FullFeaturedCrudGrid() {
     { field: 'batch', headerName: 'Batch', width: 150, editable: true },
     { field: 'degree', headerName: 'Degree', width: 150, editable: true },
     { field: 'phoneNumber', headerName: 'Phone Number', width: 150, editable: true },
-    {field:'club_id',headerName:'Club',width:150,editable:true},
+    {field:'club_id',headerName:'Joined Club ID',width:150,editable:true},
+    {
+      field: 'registeredEvents',
+      headerName: 'Registered Events',
+      width: 150,
+      renderCell: (params) => (
+        <VisibilityIcon
+          style={{ cursor: 'pointer' }}
+          onClick={() => handleViewRegisteredEvents(params.row.email)}
+        />
+      ),
+    },
     {
       field: 'profileImage',
       headerName: 'Profile Image',
@@ -403,6 +494,88 @@ export default function FullFeaturedCrudGrid() {
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog open={eventDialogOpen} onClose={() => setEventDialogOpen(false)}>
+      <DialogTitle>Registered Events</DialogTitle>
+      <DialogContent>
+        {registeredEvents.length ? (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Event Name</th>
+                <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Registration Time</th>
+                <th style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {registeredEvents.map((event) => (
+                <tr key={event.id}>
+                  <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{event.eventName}</td>
+                  <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                    {new Date(event.registrationTime).toLocaleString()}
+                  </td>
+                  <td style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>
+                    <Button
+                      color="secondary"
+                      onClick={() => handleCancelRegistration(event.eventId, currentEmail)}
+                      startIcon={<DeleteIcon />}
+                    >
+                      Cancel
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <Typography>No events registered.</Typography>
+        )}
+
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={() => setAddingEvents(true)}
+          style={{ marginTop: '20px' }}
+        >
+          Add Events
+        </Button>
+
+        {addingEvents && (
+          <div style={{ marginTop: '20px' }}>
+            <Typography variant="h6">Select Events to Register</Typography>
+            {allEvents.map((event) => (
+              <FormControlLabel
+                key={event.id}
+                control={
+                  <Checkbox
+                    checked={selectedEvents.includes(event.id)}
+                    onChange={() => handleToggleEvent(event.id)}
+                    name={event.eventName}
+                  />
+                }
+                label={event.eventName}
+              />
+            ))}
+            <Button
+              onClick={handleRegisterEvents}
+              color="primary"
+              startIcon={<SaveIcon />}
+              disabled={selectedEvents.length === 0} // Disable Save if no events are selected
+              style={{ marginTop: '20px' }}
+            >
+              Save
+            </Button>
+          </div>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setEventDialogOpen(false)} color="primary">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+
+
     </Box>
     </>
   );

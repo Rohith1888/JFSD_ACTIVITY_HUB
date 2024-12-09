@@ -7,6 +7,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast, ToastContainer } from 'react-toastify';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   DataGrid,
@@ -56,6 +57,20 @@ export default function AllEvents() {
   const [editingRowId, setEditingRowId] = React.useState(null);
   const [editImageDialogOpen, setEditImageDialogOpen] = React.useState(false);
   const [editImage, setEditImage] = React.useState('');
+  const [registeredStudents, setRegisteredStudents] = React.useState([]);
+const [viewStudentsDialogOpen, setViewStudentsDialogOpen] = React.useState(false);
+
+const handleViewRegisteredStudents = async (eventId) => {
+  try {
+    const response = await axios.get(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/events/${eventId}/students`);
+    setRegisteredStudents(response.data);
+    setViewStudentsDialogOpen(true);
+  } catch (error) {
+    console.error('Error fetching registered students:', error);
+    toast.error("Failed to load students.");
+  }
+};
+
 
   // Fetch all events
   const fetchEvents = async () => {
@@ -227,6 +242,17 @@ export default function AllEvents() {
       ),
     },
     {
+      field: 'studentsRegistered',  // Add a new field for the Eye icon
+      headerName: 'Students Registered',
+      width: 150,
+      renderCell: (params) => (
+        <VisibilityIcon
+          style={{ cursor: 'pointer' }}
+          onClick={() => handleViewRegisteredStudents(params.id)}  // Trigger the event fetch on click
+        />
+      ),
+    },
+    {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
@@ -247,7 +273,6 @@ export default function AllEvents() {
       ],
     },
   ];
-
   return (
     <>
       <ToastContainer />
@@ -413,6 +438,35 @@ export default function AllEvents() {
     <Button onClick={handleSaveImage}>Save</Button>
   </DialogActions>
 </Dialog>
+<Dialog open={viewStudentsDialogOpen} onClose={() => setViewStudentsDialogOpen(false)}>
+  <DialogTitle>Registered Students</DialogTitle>
+  <DialogContent>
+    {registeredStudents.length > 0 ? (
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Full Name</th>
+            <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {registeredStudents.map((student) => (
+            <tr key={student.email}>
+              <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{student.fullName}</td>
+              <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{student.studentEmail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <Typography>No students registered for this event.</Typography>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setViewStudentsDialogOpen(false)}>Close</Button>
+  </DialogActions>
+</Dialog>
+
 
       </Box>
     </>
