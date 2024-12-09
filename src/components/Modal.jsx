@@ -6,6 +6,8 @@ const Modal = ({ isOpen, onClose, card, onJoin, onLeave, isUserMember }) => {
   if (!isOpen) return null;
 
   const handleAction = () => {
+    console.log(card);
+    
     if (isUserMember) {
       onLeave();
     } else {
@@ -39,8 +41,10 @@ const Modal = ({ isOpen, onClose, card, onJoin, onLeave, isUserMember }) => {
             <h2 className="modal-heading">{card.name}</h2>
             <p className="modal-description">{card.description}</p>
             <p><strong>Venue:</strong> {card.venue || "Not specified"}</p>
-            <p><strong>Founded:</strong> {card.founded || "N/A"}</p>
-            <p><strong>Members:</strong> {card.members || "N/A"}</p>
+            <p><strong>Category:</strong> {card.category || "N/A"}</p>
+            <p><strong>Members:</strong> {card.numberOfStudents || "N/A"}</p>
+            <p><strong>Contact Mail:</strong> {card.clubMail || "N/A"}</p>
+            
           </div>
         </div>
       </div>

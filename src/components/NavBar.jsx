@@ -72,12 +72,7 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
           </Link>
         </div>
 
-        <div className="header__content__search">
-          <div className="search__container">
-            <AiOutlineSearch className="search__icon" />
-            <input type="text" placeholder="Search..." className="search__input" />
-          </div>
-        </div>
+        
 
         <nav className={`header__content__nav ${menuOpen ? "isMenu" : ""}`}>
           <ul className="nav_menu">

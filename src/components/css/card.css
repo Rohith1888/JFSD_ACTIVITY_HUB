@@ -62,13 +62,15 @@
 .card-ev:hover {
     transform: scale(1.05); /* Slight zoom on hover without affecting other cards */
     z-index: 1;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    cursor: pointer;/* Add shadow effect */
 }
 
 /* Only make scrollable if content overflows */
 .card-ev:hover .card-description {
     max-height: 150px; /* Expand the description area when hovered */
-    overflow-y: auto; /* Enable vertical scrolling only if content overflows */
+    overflow-y: auto;
+    cursor: pointer; /* Enable vertical scrolling only if content overflows */
 }
 
 .card-button {
