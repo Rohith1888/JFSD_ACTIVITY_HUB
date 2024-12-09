@@ -72,4 +72,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 =======
 # JFSD_ACTIVITY_HUB
 # Live Demo : https://activityhubklu.netlify.app/
+
+![image](https://github.com/user-attachments/assets/575b0778-ff4f-422b-99ff-c0dcbec43246)
+
+![image](https://github.com/user-attachments/assets/e73355a4-667b-4fe4-a4c5-c21b2ed9d78b)
+
+![image](https://github.com/user-attachments/assets/a7f965ca-e7ff-49f9-a544-7ae6577573e2)
+
+For Backend: https://github.com/Rohith1888/JFSD_ACTIVITY_HUB_BACKEND
+
+
     
