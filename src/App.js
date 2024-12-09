@@ -15,7 +15,6 @@ import Overview from './components/Admin_module/Overview';
 import AllStudents from './components/Admin_module/AllStudents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import WelcomeBanner from './components/Admin_module/WelcomBanner';
 import SignUpForm from './components/SignUpForm';
 import PrivateRoute from './components/PrivateRoute';
 import AllClubs from './components/Admin_module/AllClubs';
@@ -101,7 +100,7 @@ function AppContent() {
           <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} handleLogout={handleLogout} user={user} />
           <div className="main-content">
             <Routes>
-              <Route path="/admin" element={<WelcomeBanner user={user} />} />
+              <Route path="/admin" element={<Overview  />} />
               <Route path="/admin/overview" element={<Overview />} />
               <Route path="/admin/all" element={<AllStudents />} />
               <Route path="/admin/all-clubs" element={<AllClubs />} />
