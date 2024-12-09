@@ -273,8 +273,7 @@ export default function FullFeaturedCrudGrid() {
 
   const columns = [
     { field: 'serialNumber', headerName: 'S.No', width: 80 },
-    { field: 'idNumber', headerName: 'ID Number', width: 150, editable: true },
-    
+    { field: 'idNumber', headerName: 'ID Number', width: 150, editable: true }, 
     { field: 'email', headerName: 'Email', width: 220, editable: false },
     { field: 'fullName', headerName: 'Full Name', width: 180, editable: true },
     { field: 'password', headerName: 'Password', width: 150, editable: true },

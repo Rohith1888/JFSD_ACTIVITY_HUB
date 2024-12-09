@@ -386,7 +386,7 @@ const [selectedClubIdForAdd, setSelectedClubIdForAdd] = React.useState(null);
   
   // Define columns for the DataGrid
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100, editable: false, height: 100 },
+    { field: 'id', headerName: 'Club ID', width: 100, editable: false, height: 100 },
     { field: 'name', headerName: 'Club Name', width: 200, editable: true },
     { field: 'description', headerName: 'Description', width: 250, editable: true },
     {field: 'venue', headerName: 'Venue', width: 180, editable: true },

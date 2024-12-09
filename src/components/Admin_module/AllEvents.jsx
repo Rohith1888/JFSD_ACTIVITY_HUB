@@ -147,8 +147,6 @@ const handleViewRegisteredStudents = async (eventId) => {
         clubId,
         organizerEmail,
         eventImage: newImage,
-        points: newEvent.points,
-        penalty: newEvent.penalty,
       });
 
       if (response.data === 'Event already exists') {
@@ -220,7 +218,7 @@ const handleViewRegisteredStudents = async (eventId) => {
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'id', headerName: 'Event ID', width: 100 },
     { field: 'eventName', headerName: 'Event Name', width: 200, editable: true },
     { field: 'eventDescription', headerName: 'Description', width: 300, editable: true },
     { field: 'eventDate', headerName: 'Date', width: 150, editable: true },
