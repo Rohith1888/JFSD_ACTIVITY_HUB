@@ -147,6 +147,8 @@ const handleViewRegisteredStudents = async (eventId) => {
         clubId,
         organizerEmail,
         eventImage: newImage,
+        penalty: newEvent.penalty,
+        points: newEvent.points,
       });
 
       if (response.data === 'Event already exists') {
