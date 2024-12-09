@@ -71,6 +71,12 @@ function Navbar({ user, isLoggedIn, handleLogout }) {
             <img src={logo} alt="Logo" />
           </Link>
         </div>
+        <div className="header__content__search">
+          <div className="search__container">
+            <AiOutlineSearch className="search__icon" />
+            <input type="text" placeholder="Search..." className="search__input" />
+          </div>
+        </div>
 
         
 
