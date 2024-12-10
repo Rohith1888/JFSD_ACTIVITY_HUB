@@ -36,6 +36,7 @@ function EditToolbar(props) {
   const handleClick = () => {
     setAddDialogOpen(true);
   };
+ 
 
   return (
     <GridToolbarContainer>
@@ -68,6 +69,8 @@ export default function FullFeaturedCrudGrid() {
   const [allEvents, setAllEvents] = React.useState([]);
   const [selectedEvents, setSelectedEvents] = React.useState([]);
   const [addingEvents, setAddingEvents] = React.useState(false); 
+  const [loading, setLoading] = React.useState(false);
+  
 
   const handleToggleEvent = (eventId) => {
     setSelectedEvents((prevSelectedEvents) =>
@@ -77,7 +80,9 @@ export default function FullFeaturedCrudGrid() {
     );
   };
 
+  
   const fetchStudents = () => {
+    setLoading(true);
     axios.get('https://jfsdactivityhubbackend-production.up.railway.app/student/all')
       .then(response => {
         const studentsWithIds = response.data.map((student, index) => ({
@@ -86,11 +91,18 @@ export default function FullFeaturedCrudGrid() {
           ...student,
         }));
         setRows(studentsWithIds);
+       
       })
       .catch(error => {
+        
         console.error('There was an error fetching the students!', error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  
 
   
   React.useEffect(() => {
@@ -380,7 +392,7 @@ export default function FullFeaturedCrudGrid() {
         rows={rows}
         columns={columns}
         editMode="row"
-        
+        loading={loading}
         rowModesModel={rowModesModel}
         onRowModesModelChange={setRowModesModel}
         onRowEditStop={handleRowEditStop}

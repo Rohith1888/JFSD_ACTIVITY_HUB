@@ -57,11 +57,13 @@ export default function FullFeaturedCrudGrid() {
   const [studentsList, setStudentsList] = React.useState([]);
 const [studentsDialogOpen, setStudentsDialogOpen] = React.useState(false);
 const [selectedClubIdForAdd, setSelectedClubIdForAdd] = React.useState(null);
+const [loading, setLoading] = React.useState(true);
 
 
 
   // Fetch clubs from server
   const fetchClubs = () => {
+    setLoading(true);
     axios
       .get('https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllClubs')
       .then((response) => {
@@ -78,12 +80,16 @@ const [selectedClubIdForAdd, setSelectedClubIdForAdd] = React.useState(null);
               };
             })
             .catch((error) => {
+              
               console.error(`Error fetching students for club ${club.id}:`, error);
               return {
                 ...club,
                 numberOfStudents: 0, // Default to 0 if there's an error
               };
-            });
+            }).finally(() => {
+              setLoading(false);
+            }
+            );
         });
   
         // Wait for all promises to resolve
@@ -496,6 +502,7 @@ const [selectedClubIdForAdd, setSelectedClubIdForAdd] = React.useState(null);
           rows={rows}
           columns={columns}
           editMode="row"
+          loading={loading}
           rowModesModel={rowModesModel}
           onRowModesModelChange={setRowModesModel}
           processRowUpdate={processRowUpdate}

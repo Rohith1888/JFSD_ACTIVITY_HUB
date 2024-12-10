@@ -5,6 +5,7 @@ import CardsGrid from "./CardGrid";
 export default function Clubs() {
     const [clubsData, setClubsData] = useState([]);
     const [userClubId, setUserClubId] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Fetch clubs data
     useEffect(() => {
@@ -16,8 +17,10 @@ export default function Clubs() {
                 }
                 const data = await response.json();
                 setClubsData(data);
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching clubs data:", error);
+                setLoading(false);
             }
         };
         fetchClubs();
@@ -52,7 +55,52 @@ export default function Clubs() {
 
         fetchUserClubId();
     }, []); // Empty dependency array ensures it only runs once when the component mounts.
-
+    if (loading) {
+        return (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                backgroundColor: '#f0f0f0', // Optional for a better background
+              }}
+            >
+              <h1 style={{ fontSize: '2rem', color: '#333', fontWeight: 'bold' }}>Loading Clubs<span className="dots"></span></h1>
+            </div>
+            <style>
+              {`
+                .dots {
+                  display: inline-block;
+                  margin-left: 5px;
+                }
+                .dots::after {
+                  content: '...';
+                  display: inline-block;
+                  animation: dots 1.5s steps(3, end) infinite;
+                }
+                @keyframes dots {
+                  0% {
+                    content: '';
+                  }
+                  33% {
+                    content: '.';
+                  }
+                  66% {
+                    content: '..';
+                  }
+                  100% {
+                    content: '...';
+                  }
+                }
+              `}
+            </style>
+          </>
+        );
+      }
+      
     return (
         <>
             <Banner title1="Clubs" title2=" " />

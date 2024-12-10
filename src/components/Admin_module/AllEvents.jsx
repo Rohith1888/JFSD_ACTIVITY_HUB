@@ -60,6 +60,7 @@ export default function AllEvents() {
   const [editImage, setEditImage] = React.useState('');
   const [registeredStudents, setRegisteredStudents] = React.useState([]);
 const [viewStudentsDialogOpen, setViewStudentsDialogOpen] = React.useState(false);
+const [loading, setLoading] = React.useState(true);
 
 const handleViewRegisteredStudents = async (eventId) => {
   try {
@@ -75,6 +76,7 @@ const handleViewRegisteredStudents = async (eventId) => {
 
   // Fetch all events
   const fetchEvents = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get('https://jfsdactivityhubbackend-production.up.railway.app/admin/getAllEvents');
       setRows(data);
@@ -82,6 +84,9 @@ const handleViewRegisteredStudents = async (eventId) => {
       console.error('Error fetching events:', error);
       toast.error('Failed to fetch events.');
     }
+    finally {
+      setLoading(false);
+    } 
   };
 
   // Fetch all clubs
@@ -288,6 +293,7 @@ const handleViewRegisteredStudents = async (eventId) => {
           rows={rows}
           columns={columns}
           editMode="row"
+          loading={loading}
           rowModesModel={rowModesModel}
           onRowModesModelChange={setRowModesModel}
           processRowUpdate={processRowUpdate}

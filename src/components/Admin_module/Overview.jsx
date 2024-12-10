@@ -16,6 +16,7 @@ const Overview = () => {
     totalParticipation: 0,
     totalClubs: 0,
   });
+  const [loading, setLoading] = useState(true); // State to handle loading
 
   const navigate = useNavigate(); // Initialize useNavigate hook
 
@@ -41,7 +42,9 @@ const Overview = () => {
         totalClubs,
         totalEvents,
       }));
+      setLoading(false); // Set loading to false once the data
     } catch (error) {
+      setLoading(false); // Set loading to false even if there's an error
       console.error('Error fetching data:', error);
     }
   };
@@ -73,6 +76,52 @@ const Overview = () => {
   const handleNavigateToEvents = () => {
     navigate('/admin/all-events');
   };
+  if (loading) {
+    return (
+      <>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#f0f0f0', // Optional for a better background
+          }}
+        >
+          <h1 style={{ fontSize: '2rem', color: '#333', fontWeight: 'bold' }}>Loading Dashboard<span className="dots"></span></h1>
+        </div>
+        <style>
+          {`
+            .dots {
+              display: inline-block;
+              margin-left: 5px;
+            }
+            .dots::after {
+              content: '...';
+              display: inline-block;
+              animation: dots 1.5s steps(3, end) infinite;
+            }
+            @keyframes dots {
+              0% {
+                content: '';
+              }
+              33% {
+                content: '.';
+              }
+              66% {
+                content: '..';
+              }
+              100% {
+                content: '...';
+              }
+            }
+          `}
+        </style>
+      </>
+    );
+  }
+  
 
   return (
     <div className="overview-container_admin">

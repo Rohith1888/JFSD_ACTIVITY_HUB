@@ -4,6 +4,7 @@ import CardGridEvent from "./CardGridEvent";
 import ModalEvent from "./ModalEvent";
 import "../components/css/events.css";
 
+
 export default function Events() {
   const [events, setEvents] = useState([]); // Holds all events fetched from the API
   const [loading, setLoading] = useState(true); // Loading state
@@ -81,8 +82,51 @@ export default function Events() {
   const nonTechnicalEvents = events.filter((event) => event.club.category === "Non-Tech");
 
   if (loading) {
-    return <div>Loading events...</div>;
+    return (
+      <>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#f0f0f0', // Optional for a better background
+          }}
+        >
+          <h1 style={{ fontSize: '2rem', color: '#333', fontWeight: 'bold' }}>Loading events<span className="dots"></span></h1>
+        </div>
+        <style>
+          {`
+            .dots {
+              display: inline-block;
+              margin-left: 5px;
+            }
+            .dots::after {
+              content: '...';
+              display: inline-block;
+              animation: dots 1.5s steps(3, end) infinite;
+            }
+            @keyframes dots {
+              0% {
+                content: '';
+              }
+              33% {
+                content: '.';
+              }
+              66% {
+                content: '..';
+              }
+              100% {
+                content: '...';
+              }
+            }
+          `}
+        </style>
+      </>
+    );
   }
+  
 
   return (
     <>

@@ -23,7 +23,16 @@ import ForgotPassword from './components/ForgotPassword';
 import AllEvents from './components/Admin_module/AllEvents';
 import Organizer from './components/Organizer';
 import MyEventsPage from './components/MyEvents';
+import NotFound from './components/NotFound404';
 
+
+const NotFound404 = () => {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <NotFound size={20} isButton={false} />
+    </div>
+  );
+};
 function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -89,6 +98,12 @@ function AppContent() {
   if (loading) {
     return <div>Loading...</div>; // Loading state
   }
+  const is404 = location.pathname === '*' || !['/','/admin/overview','/admin/all','/admin/all-clubs','/admin/all-events','/forgot-password', '/signin', '/signup', '/profile', '/admin', '/events', '/clubs', '/sports', '/contact', '/organizer', '/leaderboard', '/my-events'].includes(location.pathname);
+
+  if (is404) {
+    return <NotFound404 />;
+  }
+
 
   return (
     <>
@@ -99,32 +114,34 @@ function AppContent() {
           </button>
           <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} handleLogout={handleLogout} user={user} />
           <div className="main-content">
-            <Routes>
-              <Route path="/admin" element={<Overview  />} />
-              <Route path="/admin/overview" element={<Overview />} />
-              <Route path="/admin/all" element={<AllStudents />} />
-              <Route path="/admin/all-clubs" element={<AllClubs />} />
-              <Route path="/admin/all-events" element={<AllEvents />} />
-            </Routes>
+          <Routes>
+  <Route path="/admin" element={<PrivateRoute element={Overview} isLoggedIn={!!user} />} />
+  <Route path="/admin/overview" element={<PrivateRoute element={Overview} isLoggedIn={!!user} />} />
+  <Route path="/admin/all" element={<PrivateRoute element={AllStudents} isLoggedIn={!!user} />} />
+  <Route path="/admin/all-clubs" element={<PrivateRoute element={AllClubs} isLoggedIn={!!user} />} />
+  <Route path="/admin/all-events" element={<PrivateRoute element={AllEvents} isLoggedIn={!!user} />} />
+</Routes>
+
           </div>
         </div>
       ) : (
         <>
-          <Navbar user={user} isLoggedIn={!!user} handleLogout={handleLogout} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/events" element={<PrivateRoute element={Events} isLoggedIn={!!user} />} />
-            <Route path="/clubs" element={<PrivateRoute element={Clubs} isLoggedIn={!!user} />} />
-            <Route path="/sports" element={<PrivateRoute element={Sports} isLoggedIn={!!user} />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/signin" element={<LoginForm setUser={setUser} />} />
-            <Route path="/signup" element={<SignUpForm />} />
-            <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} />} />
-            <Route path="/organizer" element={<Organizer user={user} />} />
-            <Route path="/leaderboard" element={<MyEventsPage />} />
-            <Route path="/my-events" element={<MyEventsPage user={user} />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-          </Routes>
+         <Navbar user={user} isLoggedIn={!!user} handleLogout={handleLogout} />
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/events" element={<PrivateRoute element={Events} isLoggedIn={!!user} />} />
+  <Route path="/clubs" element={<PrivateRoute element={Clubs} isLoggedIn={!!user} />} />
+  <Route path="/sports" element={<PrivateRoute element={Sports} isLoggedIn={!!user} />} />
+  <Route path="/contact" element={<Contact />} />
+  <Route path="/signin" element={<LoginForm setUser={setUser} />} />
+  <Route path="/signup" element={<SignUpForm />} />
+  <Route path="/profile" element={<PrivateRoute element={ProfilePage} user={user} setUser={setUser} isLoggedIn={!!user} />} />
+  <Route path="/organizer" element={<PrivateRoute element={Organizer} user={user}isLoggedIn={!!user} />} />
+  <Route path="/leaderboard" element={<PrivateRoute element={MyEventsPage} isLoggedIn={!!user} />} />
+  <Route path="/my-events" element={<PrivateRoute element={MyEventsPage} user={user} isLoggedIn={!!user} />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
+</Routes>
+
           <Footer />
         </>
       )}
