@@ -53,7 +53,7 @@ export default function AllEvents() {
     organizerEmail: '',
     points: '',
     penalty:'',
-    category: '',
+   
   });
   const [editingRowId, setEditingRowId] = React.useState(null);
   const [editImageDialogOpen, setEditImageDialogOpen] = React.useState(false);
@@ -155,7 +155,7 @@ const handleViewRegisteredStudents = async (eventId) => {
         eventImage: newImage,
         penalty: newEvent.penalty,
         points: newEvent.points,
-        category: newEvent.category,
+
       });
 
       if (response.data === 'Event already exists') {
@@ -172,6 +172,9 @@ const handleViewRegisteredStudents = async (eventId) => {
           venue: '',
           clubId: '',
           organizerEmail: '',
+          points: '',
+          penalty: '',
+
         });
         setNewImage('');
       }
@@ -236,7 +239,7 @@ const handleViewRegisteredStudents = async (eventId) => {
     { field: 'points', headerName: 'Points Gain', width: 200, editable: true },
     { field: 'penalty', headerName: 'Penalty Points', width: 200, editable: true },
     { field: 'clubId', headerName: 'Club ID', width: 150, editable: true },
-    { field: 'category', headerName: 'Category', width: 150, editable: true },
+   
     
     { field: 'organizerEmail', headerName: 'Organizer Email', width: 200, editable: true },
     {
@@ -321,11 +324,11 @@ const handleViewRegisteredStudents = async (eventId) => {
   required
   value={newEvent.clubId}
   onChange={(e) => {
-    const selectedClub = clubs.find((club) => club.id === e.target.value);
+   
     setNewEvent({
       ...newEvent,
       clubId: e.target.value,
-      category: selectedClub?.category || "",
+     
     });
     fetchStudents(e.target.value);
   }}
