@@ -79,6 +79,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ![image](https://github.com/user-attachments/assets/a7f965ca-e7ff-49f9-a544-7ae6577573e2)
 
+Use email: admin@activityhub.com
+Use pass: admin
+for Admin login
+
 For Backend: https://github.com/Rohith1888/JFSD_ACTIVITY_HUB_BACKEND
 
 
