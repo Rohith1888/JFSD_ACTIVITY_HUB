@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import './components/css/Admin_Module/AdminHome.css';
@@ -79,12 +79,9 @@ function AppContent() {
 
       // Start a strict 1-minute session timeout
       sessionTimeoutRef.current = setTimeout(() => {
-        toast.error('Session timed out. You have been logged out.', {
-          position: 'top-right',
-          autoClose: 5000,
-        });
+       
         handleLogout();
-      }, 1  * 60 * 1000); // 1 minute
+      }, 45  * 60 * 1000); // 1 minute
     }
     setLoading(false);
   }, [handleLogout]);

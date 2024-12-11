@@ -78,14 +78,14 @@ const LoginForm = ({ setUser }) => {
       </div>
       <h2 className="login-heading">Login to Activity Hub</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
+        <div className="form-group" style={{width:'400px'}}>
+          <label htmlFor="email">Email or Username</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
+            placeholder="your@email.com or username"
             required
             className="form-input"
           />
