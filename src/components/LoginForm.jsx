@@ -69,6 +69,8 @@ const LoginForm = ({ setUser }) => {
   };
 
   return (
+    <>
+    <ToastContainer />
     <div className="login-container">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <div className="logo-container">
@@ -118,6 +120,7 @@ const LoginForm = ({ setUser }) => {
         <p>Don't have an account? <Link to="/signup">Register</Link></p>
       </div>
     </div>
+    </>
 
   );
 };
