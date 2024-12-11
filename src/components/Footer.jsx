@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="footer-column">
             <h4>Help</h4>
             <ul>
-              <li><Link to="signin/">Login/Register</Link></li>
+              <li><Link to="/signin">Login/Register</Link></li>
               <li><Link to="#">Contact</Link></li>
             </ul>
           </div>
