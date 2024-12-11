@@ -71,7 +71,7 @@ const ForgotPassword = () => {
 
   const handleResendClick = () => {
     handleResendOtp();
-    setTimer(30);
+    setTimer(59);
     setShowOtpField(true);
   };
 

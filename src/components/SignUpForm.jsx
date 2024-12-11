@@ -79,7 +79,7 @@ const SignUpForm = () => {
 
   const handleResendClick = () => {
     handleResendOtp(); // Trigger the resend OTP logic
-    setTimer(30); // Reset timer to 30 seconds
+    setTimer(59); // Reset timer to 30 seconds
     setShowOtpField(true); // Show OTP field again
   };
   // Handle OTP verification
