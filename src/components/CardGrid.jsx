@@ -3,11 +3,13 @@ import Card from "./Card";
 import Modal from "./Modal";
 import "../components/css/CardGrid.css";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CardsGrid = ({ cardsData, userClubId }) => {
   const [selectedCard, setSelectedCard] = useState(null);
-  const [clubStatus, setClubStatus] = useState(userClubId); // Track the user's current club ID
-
+  const [clubStatus, setClubStatus] = useState(userClubId); 
+  // Track the user's current club ID
+const navigate = useNavigate();
   // Sync clubStatus with userClubId whenever userClubId changes
   useEffect(() => {
     setClubStatus(userClubId);
@@ -26,7 +28,12 @@ const CardsGrid = ({ cardsData, userClubId }) => {
     const email = user?.email;
 
     if (!email || !clubId) {
-      toast.error("User email or club ID is missing!");
+      toast.error("Please log in to join the club.", {
+        autoClose: 1000,
+      })
+      setTimeout(() => {
+        navigate('/signin');
+    }, 1000);
       return;
     }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const MyEventsPage = () => {
@@ -9,6 +9,7 @@ const MyEventsPage = () => {
 
   // Fetch User Registered Events
   const fetchUserRegisteredEvents = async () => {
+    setLoading(true);
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.email) {
       try {
@@ -17,6 +18,7 @@ const MyEventsPage = () => {
         const data = await response.json();
         setUserRegisteredEventIds(data.map((event) => event.eventId));
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching user registered events:", error);
       }
     }
@@ -79,12 +81,57 @@ const MyEventsPage = () => {
 
   // Render loading state or events
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#f0f0f0', // Optional for a better background
+          }}
+        >
+          <h1 style={{ fontSize: '2rem', color: '#333', fontWeight: 'bold' }}>Loading Your Registered Events<span className="dots"></span></h1>
+        </div>
+        <style>
+          {`
+            .dots {
+              display: inline-block;
+              margin-left: 5px;
+            }
+            .dots::after {
+              content: '...';
+              display: inline-block;
+              animation: dots 1.5s steps(3, end) infinite;
+            }
+            @keyframes dots {
+              0% {
+                content: '';
+              }
+              33% {
+                content: '.';
+              }
+              66% {
+                content: '..';
+              }
+              100% {
+                content: '...';
+              }
+            }
+          `}
+        </style>
+      </>
+    );
   }
+  
 
   return (
+    <>
+    <ToastContainer />
     <div style={{ marginTop: '100px', padding: '20px' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>My Registered Events</h2>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px', fontStyle:'inherit'}}>My Registered Events</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {eventsDetails.length > 0 ? (
           eventsDetails.map((event) => (
@@ -162,6 +209,7 @@ const MyEventsPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

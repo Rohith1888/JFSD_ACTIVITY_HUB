@@ -129,9 +129,9 @@ function AppContent() {
          <Navbar user={user} isLoggedIn={!!user} handleLogout={handleLogout} />
 <Routes>
   <Route path="/" element={<Home />} />
-  <Route path="/events" element={<PrivateRoute element={Events} isLoggedIn={!!user} />} />
-  <Route path="/clubs" element={<PrivateRoute element={Clubs} isLoggedIn={!!user} />} />
-  <Route path="/sports" element={<PrivateRoute element={Sports} isLoggedIn={!!user} />} />
+  <Route path="/events" element={<Events />} />
+  <Route path="/clubs" element={<Clubs />} />
+  <Route path="/sports" element={<Sports />} />
   <Route path="/contact" element={<Contact />} />
   <Route path="/signin" element={<LoginForm setUser={setUser} />} />
   <Route path="/signup" element={<SignUpForm />} />

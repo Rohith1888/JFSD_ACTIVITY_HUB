@@ -3,6 +3,8 @@ import CardEvent from "./CardEvent";
 import ModalEvent from "./ModalEvent";
 import "../components/css/CardGrid.css";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 
 const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
   const [registeredEvents, setRegisteredEvents] = useState(userRegisteredEventIds || []);
@@ -13,7 +15,7 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
   useEffect(() => {
     setRegisteredEvents(userRegisteredEventIds);
   }, [userRegisteredEventIds]);
-
+  const navigate = useNavigate();
   // Fetch club name based on clubId for each event
   useEffect(() => {
     const fetchClubNames = async () => {
@@ -67,7 +69,13 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
     const email = user?.email;
 
     if (!email || !eventId) {
-      toast.error("User email or event ID is missing!");
+      toast.error("Please Login to Register for the Event", {
+        autoClose: 1000,
+      });
+      setTimeout(() => {
+        navigate('/signin');
+    }, 1000);
+      
       return;
     }
 
