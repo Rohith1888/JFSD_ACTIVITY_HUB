@@ -27,7 +27,7 @@ const SignUpForm = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [isOtpSending, setIsOtpSending] = useState(false);
-  const [timer, setTimer] = useState(30); // Timer starts at 30 seconds
+  const [timer, setTimer] = useState(60); // Timer starts at 30 seconds
   const [showOtpField, setShowOtpField] = useState(true); 
 
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const SignUpForm = () => {
 
   const handleResendClick = () => {
     handleResendOtp(); // Trigger the resend OTP logic
-    setTimer(59); // Reset timer to 30 seconds
+    setTimer(60); // Reset timer to 30 seconds
     setShowOtpField(true); // Show OTP field again
   };
   // Handle OTP verification

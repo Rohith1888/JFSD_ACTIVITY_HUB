@@ -14,7 +14,7 @@ const ForgotPassword = () => {
   const [otpVerified, setOtpVerified] = useState(false);
   const [isOtpSending, setIsOtpSending] = useState(false);
   const [showOtpField, setShowOtpField] = useState(false);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -71,7 +71,7 @@ const ForgotPassword = () => {
 
   const handleResendClick = () => {
     handleResendOtp();
-    setTimer(59);
+    setTimer(60);
     setShowOtpField(true);
   };
 
