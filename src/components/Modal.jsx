@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, card, onJoin, onLeave, isUserMember }) => {
   if (!isOpen) return null;
 
   const handleAction = () => {
-    console.log(card);
+    
     
     if (isUserMember) {
       onLeave();

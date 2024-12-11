@@ -38,7 +38,7 @@ export default function Organizer() {
 
   // Function to handle marking attendance
   const markAttendance = async (eventId) => {
-    console.log(`Marking attendance for event ID: ${eventId}`);
+    
 
     // Find the event from the events list
     const event = events.find((event) => event.id === eventId);
@@ -49,7 +49,7 @@ export default function Organizer() {
       const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/registrations/events/${eventId}/students`);
       const studentData = await response.json();
 
-      console.log("Students registered for this event:", studentData);
+      
 
       if (studentData.length === 0) {
         alert("No students registered for this event.");
@@ -77,8 +77,7 @@ export default function Organizer() {
   const saveAttendance = async () => {
     if (!currentEvent) return;
 
-    console.log("Saving attendance for the following students:", selectedStudents);
-    console.log("Students not attending:", unselectedStudents);
+
 
     // Prepare the data to send (both checked and unchecked students)
     const data = {

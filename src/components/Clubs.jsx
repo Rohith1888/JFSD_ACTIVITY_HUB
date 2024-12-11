@@ -43,7 +43,7 @@ export default function Clubs() {
                     
                     // Check if data is valid
                     setUserClubId(data || null);
-                    console.log("Fetched user club ID:", data);
+                   
                 } catch (error) {
                     console.error("Error fetching user club ID:", error);
                 }

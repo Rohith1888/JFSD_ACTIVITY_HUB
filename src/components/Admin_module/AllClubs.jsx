@@ -286,7 +286,7 @@ const [loading, setLoading] = React.useState(true);
       } catch (error) {
         console.error("Error adding students:", error);
         toast.error("Failed to add students");
-        console.log(clubId);
+        
         
       }
     };

@@ -19,7 +19,7 @@ export default function Contact() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission logic (e.g., send to an API)
-        console.log("Form Data Submitted:", formData);
+       
     };
 
     return (

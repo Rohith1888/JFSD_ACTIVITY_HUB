@@ -84,7 +84,7 @@ function AppContent() {
           autoClose: 5000,
         });
         handleLogout();
-      }, 45 * 60 * 1000); // 1 minute
+      }, 1  * 60 * 1000); // 1 minute
     }
     setLoading(false);
   }, [handleLogout]);

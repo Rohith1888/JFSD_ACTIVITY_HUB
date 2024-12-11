@@ -21,13 +21,13 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
     const fetchClubNames = async () => {
       try {
         const clubIds = [...new Set(cardsData.map(event => event.clubId))]; // Get unique clubIds
-        console.log("Fetching club names for clubIds:", clubIds); // Debugging line
+        // Debugging line
         const clubDataPromises = clubIds.map(async (clubId) => {
           try {
             const response = await fetch(`https://jfsdactivityhubbackend-production.up.railway.app/admin/${clubId}`);
             if (response.ok) {
               const clubData = await response.json();
-              console.log(`Fetched data for clubId ${clubId}:`, clubData); // Debugging line
+           
               return { clubId, clubName: clubData.name };
             } else {
               console.error(`Failed to fetch data for clubId ${clubId}`); // Debugging line
@@ -44,7 +44,7 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
         clubDataArray.forEach((club) => {
           if (club) clubNameMap[club.clubId] = club.clubName;
         });
-        console.log("Club names map:", clubNameMap); // Debugging line
+         // Debugging line
         setClubNames(clubNameMap);
       } catch (error) {
         console.error("Error fetching club names:", error);
@@ -134,7 +134,7 @@ const CardGridEvent = ({ cardsData, userRegisteredEventIds }) => {
       <div className="cards-grid">
         {cardsData.map((card, index) => {
           const clubName = clubNames[card.clubId]; // Fetch the club name using the clubId
-          console.log(`Rendering card with clubId ${card.clubId}:`, clubName); // Debugging line
+         
           return (
             <CardEvent
               key={index}
